@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Boffin — Dev Stats</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0e14;
+    --surface: #111720;
+    --surface2: #161e2a;
+    --border: #1e2d3d;
+    --accent: #f97316;
+    --blue: #38bdf8;
+    --green: #4ade80;
+    --purple: #a78bfa;
+    --yellow: #fbbf24;
+    --text: #cdd6f4;
+    --muted: #6b7c93;
+    --go: #00ADD8;
+    --python: #3776AB;
+    --shell: #4EAA25;
+    --makefile: #e8b84b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+
+  /* background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    margin-bottom: 40px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+  }
+  header h1 span { color: var(--accent); }
+  .header-sub {
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  .live-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--green);
+    background: rgba(74,222,128,0.08);
+    border: 1px solid rgba(74,222,128,0.2);
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+  .live-dot::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 1.8s ease infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* Grid layout */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.1s; grid-row: span 2; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+
+  .card-label {
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-label::before {
+    content: '';
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* Language bars */
+  .lang-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .lang-item {}
+  .lang-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .lang-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+  .lang-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .lang-pct {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .bar-track {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: barGrow 0.9s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes barGrow {
+    to { transform: scaleX(1); }
+  }
+  .bar-fill:nth-child(1) { animation-delay: 0.3s; }
+
+  /* Repo activity */
+  .repo-list { display: flex; flex-direction: column; gap: 10px; }
+  .repo-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.2s, transform 0.15s;
+    cursor: default;
+  }
+  .repo-item:hover { border-color: var(--blue); transform: translateX(3px); }
+
+  .repo-rank {
+    font-size: 0.65rem;
+    color: var(--muted);
+    min-width: 20px;
+  }
+  .repo-info { flex: 1; min-width: 0; }
+  .repo-name {
+    font-size: 0.82rem;
+    color: var(--blue);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+  .repo-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .repo-meta span { display: flex; align-items: center; gap: 4px; }
+  .repo-bar {
+    width: 60px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .repo-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: barGrow 0.8s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  #repo-1 .repo-bar-fill { animation-delay: 0.2s; }
+  #repo-2 .repo-bar-fill { animation-delay: 0.3s; }
+  #repo-3 .repo-bar-fill { animation-delay: 0.4s; }
+  #repo-4 .repo-bar-fill { animation-delay: 0.5s; }
+  #repo-5 .repo-bar-fill { animation-delay: 0.6s; }
+  #repo-6 .repo-bar-fill { animation-delay: 0.7s; }
+  #repo-7 .repo-bar-fill { animation-delay: 0.8s; }
+
+  .lang-pip {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Commit activity chart */
+  .commit-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 80px;
+    margin-top: 4px;
+  }
+  .commit-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+  .commit-bar {
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    background: var(--border);
+    position: relative;
+    transition: opacity 0.2s;
+    overflow: hidden;
+    min-height: 4px;
+  }
+  .commit-bar::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: var(--accent);
+    height: 0%;
+    animation: barUp 0.8s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes barUp {
+    to { height: 100%; }
+  }
+  .commit-bar.hot::after { background: var(--accent); }
+  .commit-bar.mid::after { background: var(--yellow); }
+  .commit-bar.low::after { background: var(--muted); opacity: 0.6; }
+  .commit-label {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .commit-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .commit-stat { text-align: center; }
+  .commit-stat .val {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+  }
+  .commit-stat .lbl {
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .card:nth-child(2) { grid-row: span 1; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-top">
+      <h1><span>dev-boffin-io</span> / stats</h1>
+      <span class="live-dot">live</span>
+    </div>
+    <div class="header-sub">forge suite · 7 repos · language breakdown & activity</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- Language Breakdown -->
+    <div class="card">
+      <div class="card-label">Language Distribution</div>
+      <div class="lang-list">
+
+        <div class="lang-item">
+          <div class="lang-meta">
+            <div class="lang-name">
+              <div class="lang-dot" style="background:var(--python)"></div>
+              Python
+            </div>
+            <span class="lang-pct">55.13%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:55.13%; background:var(--python); animation-delay:0.2s"></div>
+          </div>
+        </div>
+
+        <div class="lang-item">
+          <div class="lang-meta">
+            <div class="lang-name">
+              <div class="lang-dot" style="background:var(--shell)"></div>
+              Shell
+            </div>
+            <span class="lang-pct">21.76%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:21.76%; background:var(--shell); animation-delay:0.3s"></div>
+          </div>
+        </div>
+
+        <div class="lang-item">
+          <div class="lang-meta">
+            <div class="lang-name">
+              <div class="lang-dot" style="background:var(--go)"></div>
+              Go
+            </div>
+            <span class="lang-pct">21.22%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:21.22%; background:var(--go); animation-delay:0.4s"></div>
+          </div>
+        </div>
+
+        <div class="lang-item">
+          <div class="lang-meta">
+            <div class="lang-name">
+              <div class="lang-dot" style="background:var(--makefile)"></div>
+              Makefile
+            </div>
+            <span class="lang-pct">1.89%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:1.89%; background:var(--makefile); animation-delay:0.5s"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Most Active Repos -->
+    <div class="card">
+      <div class="card-label">Most Active Repos</div>
+      <div class="repo-list">
+
+        <div class="repo-item" id="repo-1">
+          <span class="repo-rank">01</span>
+          <div class="repo-info">
+            <div class="repo-name">virt-forge</div>
+            <div class="repo-meta">
+              <span><div class="lang-pip" style="background:var(--go)"></div> Go</span>
+              <span>⭐ 84 commits</span>
+            </div>
+          </div>
+          <div class="repo-bar"><div class="repo-bar-fill" style="width:100%"></div></div>
+        </div>
+
+        <div class="repo-item" id="repo-2">
+          <span class="repo-rank">02</span>
+          <div class="repo-info">
+            <div class="repo-name">ollama-forge</div>
+            <div class="repo-meta">
+              <span><div class="lang-pip" style="background:var(--python)"></div> Python</span>
+              <span>⭐ 71 commits</span>
+            </div>
+          </div>
+          <div class="repo-bar"><div class="repo-bar-fill" style="width:84%"></div></div>
+        </div>
+
+        <div class="repo-item" id="repo-3">
+          <span class="repo-rank">03</span>
+          <div class="repo-info">
+            <div class="repo-name">cloud-forge</div>
+            <div class="repo-meta">
+              <span><div class="lang-pip" style="background:var(--go)"></div> Go+Py</span>
+              <span>⭐ 58 commits</span>
+            </div>
+          </div>
+          <div class="repo-bar"><div class="repo-bar-fill" style="width:69%"></div></div>
+        </div>
+
+        <div class="repo-item" id="repo-4">
+          <span class="repo-rank">04</span>
+          <div class="repo-info">
+            <div class="repo-name">easy-ssh-dev</div>
+            <div class="repo-meta">
+              <span><div class="lang-pip" style="background:var(--shell)"></div> Shell+Go</span>
+              <span>⭐ 47 commits</span>
+            </div>
+          </div>
+          <div class="repo-bar"><div class="repo-bar-fill" style="width:56%"></div></div>
+        </div>
+
+        <div class="repo-item" id="repo-5">
+          <span class="repo-rank">05</span>
+          <div class="repo-info">
+            <div class="repo-name">sftp-forge</div>
+            <div class="repo-meta">
+              <span><div class="lang-pip" style="background:var(--python)"></div> Python</span>
+              <span>⭐ 39 commits</span>
+            </div>
+          </div>
+          <div class="repo-bar"><div class="repo-bar-fill" style="width:46%"></div></div>
+        </div>
+
+        <div class="repo-item" id="repo-6">
+          <span class="repo-rank">06</span>
+          <div class="repo-info">
+            <div class="repo-name">quick-creator</div>
+            <div class="repo-meta">
+              <span><div class="lang-pip" style="background:var(--go)"></div> Go</span>
+              <span>⭐ 28 commits</span>
+            </div>
+          </div>
+          <div class="repo-bar"><div class="repo-bar-fill" style="width:33%"></div></div>
+        </div>
+
+        <div class="repo-item" id="repo-7">
+          <span class="repo-rank">07</span>
+          <div class="repo-info">
+            <div class="repo-name">new-id</div>
+            <div class="repo-meta">
+              <span><div class="lang-pip" style="background:var(--python)"></div> Python</span>
+              <span>⭐ 21 commits</span>
+            </div>
+          </div>
+          <div class="repo-bar"><div class="repo-bar-fill" style="width:25%"></div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Commit Activity -->
+    <div class="card">
+      <div class="card-label">Commit Activity — Last 12 Weeks</div>
+      <div class="commit-chart" id="commitChart"></div>
+      <div class="commit-summary">
+        <div class="commit-stat">
+          <span class="val">192</span>
+          <span class="lbl">total contributions</span>
+        </div>
+        <div class="commit-stat">
+          <span class="val">8</span>
+          <span class="lbl">longest streak</span>
+        </div>
+        <div class="commit-stat">
+          <span class="val" style="color:var(--green)">🔥 1</span>
+          <span class="lbl">current streak</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Commit data: [commits, label, heat]
+  const weeks = [
+    [18, 'W1', 'low'],
+    [24, 'W2', 'mid'],
+    [21, 'W3', 'low'],
+    [35, 'W4', 'hot'],
+    [28, 'W5', 'mid'],
+    [19, 'W6', 'low'],
+    [41, 'W7', 'hot'],
+    [38, 'W8', 'hot'],
+    [26, 'W9', 'mid'],
+    [32, 'W10','mid'],
+    [44, 'W11','hot'],
+    [22, 'W12','low'],
+  ];
+
+  const maxVal = Math.max(...weeks.map(w => w[0]));
+  const chart = document.getElementById('commitChart');
+
+  weeks.forEach(([val, label, heat], i) => {
+    const col = document.createElement('div');
+    col.className = 'commit-col';
+
+    const pct = (val / maxVal) * 100;
+    const bar = document.createElement('div');
+    bar.className = `commit-bar ${heat}`;
+    bar.style.height = `${Math.max(pct * 0.75, 8)}px`;
+    bar.style.setProperty('--delay', `${0.1 + i * 0.05}s`);
+    bar.style.animationDelay = `${0.15 + i * 0.05}s`;
+
+    // tooltip
+    bar.title = `${label}: ${val} commits`;
+
+    const lbl = document.createElement('div');
+    lbl.className = 'commit-label';
+    lbl.textContent = label;
+
+    col.appendChild(bar);
+    col.appendChild(lbl);
+    chart.appendChild(col);
+  });
+</script>
+</body>
+</html>
