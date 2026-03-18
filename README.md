@@ -147,7 +147,7 @@ PyQt6 GUI for Linux user accounts. Works correctly in both standard desktop and 
 
 ---
 
-## 🚀 2026 Roadmap
+## 🚀 Roadmap
 
 - [ ] Release **AppImage + .deb** packages for every Forge tool
 - [ ] Add **automated CI/CD** with GitHub Actions across all projects
@@ -156,16 +156,27 @@ PyQt6 GUI for Linux user accounts. Works correctly in both standard desktop and 
 
 ---
 
-## 📊 GitHub Stats
+## 📊 GitHub Stats & Activity
 
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=dev-boffin-io&show_icons=true&theme=radical&hide_border=true&include_all_commits=true&count_private=true" height="165" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=dev-boffin-io&layout=compact&theme=radical&hide_border=true" height="165" />
+
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=dev-boffin-io&layout=compact&theme=radical&hide_border=true&langs_count=4" />
+
 </div>
 
 <div align="center">
+
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=dev-boffin-io&theme=radical&hide_border=true" />
+
 </div>
+
+<div align="center">
+
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=dev-boffin-io&theme=react-dark&hide_border=true&area=true&custom_title=Contribution+Activity" />
+
+</div>
+
+> *Stats update automatically via GitHub widgets above.*
 
 ---
 
@@ -189,9 +200,9 @@ All Forge projects welcome:
 ## 📬 Get in Touch
 
 - **GitHub**: [@dev-boffin-io](https://github.com/dev-boffin-io)
-- **Email**: boffin@dev-boffin.io
+- **Email**: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ccaea3aaaaa5a28ca8a9bae1aea3aaaaa5a2e2a5a3">[email&#160;protected]</a>
 - **Website**: *(coming soon — dev-boffin-io.github.io)*
 
 ---
 
-<p align="center">Made with ❤️ for developers and power users who demand better tools.<br>MIT Licensed · 100% Open Source</p>
+<p align
