@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dev-boffin-io — Forge Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0c0f;
+      --surface:   #10141a;
+      --border:    #1e2530;
+      --accent:    #00e5a0;
+      --accent2:   #0096ff;
+      --accent3:   #ff6b35;
+      --muted:     #4a5568;
+      --text:      #c9d1d9;
+      --heading:   #f0f6fc;
+      --go:        #00add8;
+      --py:        #3572a5;
+      --cpp:       #f34b7d;
+      --sh:        #89e051;
+      --dart:      #00b4ab;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── scanlines ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,229,160,0.015) 2px,
+        rgba(0,229,160,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── grid bg ── */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── wrapper ── */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ──────────── HEADER ──────────── */
+    header {
+      position: relative;
+      padding: 72px 0 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-tag {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      color: var(--heading);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    h1 span {
+      color: var(--accent);
+      position: relative;
+    }
+
+    .tagline {
+      color: var(--muted);
+      max-width: 520px;
+      font-size: 13px;
+      margin-bottom: 32px;
+    }
+
+    .gh-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      padding: 9px 18px;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .gh-link:hover { border-color: var(--accent); color: var(--accent); }
+    .gh-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .stat-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .stat { display: flex; flex-direction: column; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--heading);
+      line-height: 1;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+
+    /* ──────────── FILTER ──────────── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 5px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,229,160,0.06);
+    }
+
+    /* ──────────── GRID ──────────── */
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      margin: 1px 0;
+    }
+
+    /* ──────────── CARD ──────────── */
+    .card {
+      background: var(--bg);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:hover { background: var(--surface); }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent);
+      transition: height 0.25s ease;
+    }
+    .card:hover::before { height: 100%; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--heading);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .card-name:hover { color: var(--accent); }
+
+    .card-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .lang-dot {
+      display: inline-block;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      margin-right: 6px;
+      flex-shrink: 0;
+    }
+    .lang-label {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+    }
+
+    .card-link {
+      font-size: 11px;
+      color: var(--accent2);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-link:hover { color: var(--accent); }
+    .card-link::after { content: '→'; }
+
+    /* fork badge */
+    .fork-badge {
+      font-size: 10px;
+      color: var(--accent3);
+      border: 1px solid rgba(255,107,53,0.3);
+      padding: 1px 7px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ──────────── FOOTER ──────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 16px;
+    }
+    .footer-left { font-size: 11px; color: var(--muted); }
+    .footer-left span { color: var(--accent); }
+    .footer-right { font-size: 11px; color: var(--muted); }
+
+    /* ──────────── CURSOR BLINK ──────────── */
+    .blink {
+      display: inline-block;
+      width: 10px; height: 1.1em;
+      background: var(--accent);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+      margin-left: 4px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ──────────── RESPONSIVE ──────────── */
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .stat-row { gap: 20px; }
+      .repo-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<div class="wrap">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="header-tag">forge suite / open source</div>
+    <h1>dev-<span>boffin</span>-io<span class="blink"></span></h1>
+    <p class="tagline">Privacy-first, offline-first Linux desktop & CLI tools — built for Debian, ARM64, and proot-Termux environments.</p>
+    <a class="gh-link" href="https://github.com/dev-boffin-io" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      github.com/dev-boffin-io
+    </a>
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Repositories</span></div>
+      <div class="stat"><span class="stat-num">Go + Py</span><span class="stat-label">Primary Stack</span></div>
+      <div class="stat"><span class="stat-num">MIT</span><span class="stat-label">License</span></div>
+      <div class="stat"><span class="stat-num">ARM64</span><span class="stat-label">Target Arch</span></div>
+    </div>
+  </header>
+
+  <!-- ── FILTER BAR ── -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all', this)">all (11)</button>
+    <button class="filter-btn" onclick="filterCards('go', this)">Go</button>
+    <button class="filter-btn" onclick="filterCards('python', this)">Python</button>
+    <button class="filter-btn" onclick="filterCards('cpp', this)">C++</button>
+    <button class="filter-btn" onclick="filterCards('shell', this)">Shell</button>
+    <button class="filter-btn" onclick="filterCards('dart', this)">Dart</button>
+  </div>
+
+  <!-- ── REPO GRID ── -->
+  <div class="repo-grid" id="grid">
+
+    <div class="card" data-lang="go" style="animation-delay:0.05s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/qbit-forge" target="_blank">qbit-forge</a>
+        <span class="card-icon">⚡</span>
+      </div>
+      <p class="card-desc">Lightweight, privacy-first management suite for qbittorrent-nox on Debian Linux — including ARM64 and proot-Termux environments.</p>
+      <div class="card-tags">
+        <span class="tag">linux</span><span class="tag">debian</span><span class="tag">qbittorrent</span><span class="tag">arm64</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/qbit-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="cpp" style="animation-delay:0.1s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/llama-forge" target="_blank">llama-forge</a>
+        <span class="card-icon">🦙</span>
+      </div>
+      <p class="card-desc">Local LLM desktop GUI for llama.cpp on Linux — chat, quantize, convert & inference. Pure C/C++ engine. No cloud. No telemetry.</p>
+      <div class="card-tags">
+        <span class="tag">linux</span><span class="tag">local-ai</span><span class="tag">llama-cpp</span><span class="tag">inference</span>
+      </div>
+      <div class="card-foot">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="lang-label"><span class="lang-dot" style="background:#f34b7d"></span>C++</span>
+          <span class="fork-badge">fork</span>
+        </div>
+        <a class="card-link" href="https://github.com/dev-boffin-io/llama-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="python" style="animation-delay:0.15s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/cloud-forge" target="_blank">cloud-forge</a>
+        <span class="card-icon">☁️</span>
+      </div>
+      <p class="card-desc">Turn any cloud storage (Google Drive, Dropbox, OneDrive, Mega, S3) into a fast & secure SFTP server using rclone. CLI + PyQt5 GUI.</p>
+      <div class="card-tags">
+        <span class="tag">sftp</span><span class="tag">rclone</span><span class="tag">google-drive</span><span class="tag">self-hosted</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/cloud-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="go" style="animation-delay:0.2s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/virt-forge" target="_blank">virt-forge</a>
+        <span class="card-icon">🖥️</span>
+      </div>
+      <p class="card-desc">QEMU virtual machine manager — control utility, disk manager, and PyQt6 GUI, all written in Go and Python. Supports ARM64, x86_64, RISC-V.</p>
+      <div class="card-tags">
+        <span class="tag">qemu</span><span class="tag">vm</span><span class="tag">kvm</span><span class="tag">arm64</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/virt-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="python" style="animation-delay:0.25s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">sftp-forge</a>
+        <span class="card-icon">🔒</span>
+      </div>
+      <p class="card-desc">Lightweight developer toolkit for secure file transfer, automation, and remote file management using the SFTP protocol. PyQt6 GUI with sshfs mounting.</p>
+      <div class="card-tags">
+        <span class="tag">sftp</span><span class="tag">ssh</span><span class="tag">sshfs</span><span class="tag">automation</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="python" style="animation-delay:0.3s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/ollama-forge" target="_blank">ollama-forge</a>
+        <span class="card-icon">🤖</span>
+      </div>
+      <p class="card-desc">Local AI desktop GUI for Ollama on Linux — chat, RAG, multi-agent crews, model management. No cloud. No telemetry. PyQt5/PyInstaller.</p>
+      <div class="card-tags">
+        <span class="tag">ollama</span><span class="tag">local-ai</span><span class="tag">rag</span><span class="tag">pyqt5</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/ollama-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="go" style="animation-delay:0.35s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/easy-ssh-dev" target="_blank">easy-ssh-dev</a>
+        <span class="card-icon">🔑</span>
+      </div>
+      <p class="card-desc">sshx — Simple SSH manager with CLI and GUI. One-click passwordless SSH setup for developers and non-programmers. GTK3/VTE GUI.</p>
+      <div class="card-tags">
+        <span class="tag">ssh</span><span class="tag">cli</span><span class="tag">gtk3</span><span class="tag">devops</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/easy-ssh-dev" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="python" style="animation-delay:0.4s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/Linux-core-identity-manager" target="_blank">Linux-core-identity-manager</a>
+        <span class="card-icon">🛡️</span>
+      </div>
+      <p class="card-desc">Lightweight Linux identity manager for user account administration. Supports search, filtering, locking/unlocking users, sudo management. proot-compatible.</p>
+      <div class="card-tags">
+        <span class="tag">security</span><span class="tag">user-management</span><span class="tag">proot</span><span class="tag">linux</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/Linux-core-identity-manager" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="python" style="animation-delay:0.45s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/quick-creator" target="_blank">quick-creator</a>
+        <span class="card-icon">⚙️</span>
+      </div>
+      <p class="card-desc">Lightweight Linux desktop application for generating project structures and file scaffolding. Config-driven automation for developers.</p>
+      <div class="card-tags">
+        <span class="tag">scaffolding</span><span class="tag">automation</span><span class="tag">config</span><span class="tag">linux</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/quick-creator" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="dart" style="animation-delay:0.5s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/flutter-tool-dev" target="_blank">flutter-tool-dev</a>
+        <span class="card-icon">🐦</span>
+      </div>
+      <p class="card-desc">Flutter ARM64 Installer CLI tool — downloads, installs, and manages Flutter SDK on ARM64 Linux via community-maintained GitHub releases.</p>
+      <div class="card-tags">
+        <span class="tag">flutter</span><span class="tag">dart</span><span class="tag">arm64</span><span class="tag">sdk</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00b4ab"></span>Shell / Dart</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/flutter-tool-dev" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card" data-lang="go" style="animation-delay:0.55s">
+      <div class="card-top">
+        <a class="card-name" href="https://github.com/dev-boffin-io/dev-boffin-io" target="_blank">dev-boffin-io</a>
+        <span class="card-icon">🌐</span>
+      </div>
+      <p class="card-desc">GitHub profile & portfolio hub — the home of the Forge Suite. Static landing page deployed via Vercel.</p>
+      <div class="card-tags">
+        <span class="tag">portfolio</span><span class="tag">profile</span><span class="tag">vercel</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00e5a0"></span>HTML</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/dev-boffin-io" target="_blank">View repo</a>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-left">
+      © 2026 <span>dev-boffin-io</span> — Privacy-first. Offline-first. Open Source.
+    </div>
+    <div class="footer-right">MIT License · Debian · ARM64 · proot-Termux</div>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+  function filterCards(lang, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.card').forEach(card => {
+      if (lang === 'all' || card.dataset.lang === lang) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+</body>
+</html>
