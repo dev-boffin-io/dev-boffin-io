@@ -10,13 +10,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0a0c0f;
-      --surface:   #10141a;
+      --bg:        #07090d;
+      --surface:   #0d1117;
+      --surface2:  #131820;
       --border:    #1e2530;
       --accent:    #00e5a0;
       --accent2:   #0096ff;
       --accent3:   #ff6b35;
+      --accent4:   #c678dd;
+      --accent5:   #e5c07b;
       --muted:     #4a5568;
+      --muted2:    #6a7890;
       --text:      #c9d1d9;
       --heading:   #f0f6fc;
       --go:        #00add8;
@@ -38,14 +42,16 @@
       overflow-x: hidden;
     }
 
-    /* ── noise overlay ── */
-    body::before {
-      content: '';
+    /* ── grid bg ── */
+    .grid-bg {
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,229,160,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,160,0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
       z-index: 0;
+      pointer-events: none;
     }
 
     /* ── scanlines ── */
@@ -57,79 +63,101 @@
         0deg,
         transparent,
         transparent 2px,
-        rgba(0,229,160,0.015) 2px,
-        rgba(0,229,160,0.015) 4px
+        rgba(0,229,160,0.008) 2px,
+        rgba(0,229,160,0.008) 4px
       );
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ── grid bg ── */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
-      background-size: 48px 48px;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* ── wrapper ── */
+    /* ── wrap ── */
     .wrap {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 32px;
     }
 
-    /* ──────────── HEADER ──────────── */
+    /* ──────────── HERO ──────────── */
     header {
       position: relative;
-      padding: 72px 0 56px;
+      padding: 96px 0 72px;
       border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    /* glowing orbs */
+    header::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,150,255,0.07) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .header-tag {
-      font-size: 11px;
-      letter-spacing: 0.18em;
+      font-size: 12px;
+      letter-spacing: 0.22em;
       color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
     .header-tag::before {
       content: '';
       display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
+      width: 32px; height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
     }
+    .header-tag::after {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
 
     h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-size: clamp(3rem, 7vw, 5.5rem);
       font-weight: 800;
       color: var(--heading);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
     }
 
-    h1 span {
-      color: var(--accent);
-      position: relative;
-    }
+    h1 .hl-green  { color: var(--accent); text-shadow: 0 0 40px rgba(0,229,160,0.35); }
+    h1 .hl-blue   { color: var(--accent2); text-shadow: 0 0 40px rgba(0,150,255,0.35); }
 
     .tagline {
-      color: var(--muted);
-      max-width: 520px;
-      font-size: 13px;
-      margin-bottom: 32px;
+      color: var(--muted2);
+      max-width: 580px;
+      font-size: 14px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
     }
 
     .gh-link {
@@ -140,45 +168,115 @@
       border: 1px solid var(--border);
       color: var(--text);
       text-decoration: none;
-      padding: 9px 18px;
+      padding: 11px 22px;
       font-size: 12px;
-      letter-spacing: 0.05em;
-      transition: border-color 0.2s, color 0.2s;
+      letter-spacing: 0.07em;
+      transition: all 0.2s;
     }
-    .gh-link:hover { border-color: var(--accent); color: var(--accent); }
+    .gh-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,229,160,0.05);
+      box-shadow: 0 0 20px rgba(0,229,160,0.1);
+    }
     .gh-link svg { width: 16px; height: 16px; fill: currentColor; }
 
+    .vercel-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      text-decoration: none;
+      padding: 11px 22px;
+      font-size: 12px;
+      letter-spacing: 0.07em;
+      transition: all 0.2s;
+    }
+    .vercel-link:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* ── stat row ── */
     .stat-row {
       display: flex;
-      gap: 32px;
-      margin-top: 40px;
+      gap: 0;
+      flex-wrap: wrap;
     }
-    .stat { display: flex; flex-direction: column; }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 36px 20px 0;
+      position: relative;
+    }
+    .stat + .stat {
+      padding-left: 36px;
+      border-left: 1px solid var(--border);
+    }
     .stat-num {
       font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
+      font-size: 2.2rem;
       font-weight: 800;
-      color: var(--heading);
       line-height: 1;
+      background: linear-gradient(135deg, var(--heading) 40%, var(--muted2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+    .stat-num.green { background: linear-gradient(135deg, var(--accent), #00b87c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-num.blue  { background: linear-gradient(135deg, var(--accent2), #0066cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-num.orange{ background: linear-gradient(135deg, var(--accent3), #cc4400); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-num.purple{ background: linear-gradient(135deg, var(--accent4), #8844aa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; }
 
-    /* ──────────── FILTER ──────────── */
+    /* ──────────── SECTION LABEL ──────────── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 36px 0 20px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-label .badge {
+      font-size: 10px;
+      padding: 3px 10px;
+      border: 1px solid;
+      letter-spacing: 0.08em;
+    }
+    .section-label.forge-label { color: var(--accent); }
+    .section-label.forge-label .badge {
+      border-color: rgba(0,229,160,0.4);
+      color: var(--accent);
+      background: rgba(0,229,160,0.07);
+    }
+    .section-label.other-label { color: var(--muted2); }
+    .section-label.other-label .badge {
+      border-color: var(--border);
+      color: var(--muted2);
+    }
+    .section-divider {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ──────────── FILTER BAR ──────────── */
     .filter-bar {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
+      padding: 20px 0 24px;
     }
     .filter-btn {
       background: transparent;
       border: 1px solid var(--border);
       color: var(--muted);
-      padding: 5px 14px;
+      padding: 6px 16px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
       cursor: pointer;
       transition: all 0.15s;
     }
@@ -186,13 +284,14 @@
     .filter-btn.active {
       border-color: var(--accent);
       color: var(--accent);
-      background: rgba(0,229,160,0.06);
+      background: rgba(0,229,160,0.07);
+      box-shadow: 0 0 12px rgba(0,229,160,0.08);
     }
 
     /* ──────────── GRID ──────────── */
     .repo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 1px;
       background: var(--border);
       margin: 1px 0;
@@ -201,10 +300,10 @@
     /* ──────────── CARD ──────────── */
     .card {
       background: var(--bg);
-      padding: 28px;
+      padding: 32px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
       transition: background 0.2s;
       position: relative;
       overflow: hidden;
@@ -212,18 +311,33 @@
     }
     .card:hover { background: var(--surface); }
 
+    /* colored top border per card */
     .card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 0;
-      background: var(--accent);
-      transition: height 0.25s ease;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.25s;
     }
-    .card:hover::before { height: 100%; }
+    .card:hover::before { opacity: 1; }
+
+    .card.color-green::before  { background: linear-gradient(90deg, var(--accent), transparent); }
+    .card.color-blue::before   { background: linear-gradient(90deg, var(--accent2), transparent); }
+    .card.color-orange::before { background: linear-gradient(90deg, var(--accent3), transparent); }
+    .card.color-purple::before { background: linear-gradient(90deg, var(--accent4), transparent); }
+    .card.color-yellow::before { background: linear-gradient(90deg, var(--accent5), transparent); }
+    .card.color-teal::before   { background: linear-gradient(90deg, var(--dart), transparent); }
+    .card.color-red::before    { background: linear-gradient(90deg, var(--cpp), transparent); }
+
+    /* glow on hover */
+    .card.color-green:hover  { box-shadow: inset 0 0 40px rgba(0,229,160,0.04); }
+    .card.color-blue:hover   { box-shadow: inset 0 0 40px rgba(0,150,255,0.04); }
+    .card.color-orange:hover { box-shadow: inset 0 0 40px rgba(255,107,53,0.04); }
+    .card.color-purple:hover { box-shadow: inset 0 0 40px rgba(198,120,221,0.04); }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -234,26 +348,44 @@
       gap: 12px;
     }
 
+    .card-name-wrap { display: flex; flex-direction: column; gap: 4px; }
+
     .card-name {
       font-family: 'Syne', sans-serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--heading);
       text-decoration: none;
       transition: color 0.15s;
     }
-    .card-name:hover { color: var(--accent); }
+    .card.color-green  .card-name:hover { color: var(--accent); }
+    .card.color-blue   .card-name:hover { color: var(--accent2); }
+    .card.color-orange .card-name:hover { color: var(--accent3); }
+    .card.color-purple .card-name:hover { color: var(--accent4); }
+    .card.color-yellow .card-name:hover { color: var(--accent5); }
+    .card.color-teal   .card-name:hover { color: var(--dart); }
+    .card.color-red    .card-name:hover { color: var(--cpp); }
+
+    .forge-badge {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border: 1px solid rgba(0,229,160,0.3);
+      padding: 1px 8px;
+      background: rgba(0,229,160,0.05);
+      width: fit-content;
+    }
 
     .card-icon {
-      font-size: 20px;
+      font-size: 24px;
       flex-shrink: 0;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .card-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
+      font-size: 12.5px;
+      color: var(--muted2);
+      line-height: 1.7;
       flex: 1;
     }
 
@@ -265,16 +397,18 @@
     .tag {
       font-size: 10px;
       letter-spacing: 0.06em;
-      padding: 2px 8px;
+      padding: 3px 9px;
       border: 1px solid var(--border);
       color: var(--muted);
+      transition: all 0.15s;
     }
+    .card:hover .tag { border-color: #2a3340; }
 
     .card-foot {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 12px;
+      padding-top: 14px;
       border-top: 1px solid var(--border);
     }
 
@@ -287,14 +421,13 @@
     }
     .lang-label {
       font-size: 11px;
-      color: var(--muted);
+      color: var(--muted2);
       display: flex;
       align-items: center;
     }
 
     .card-link {
       font-size: 11px;
-      color: var(--accent2);
       text-decoration: none;
       letter-spacing: 0.06em;
       transition: color 0.15s;
@@ -302,8 +435,15 @@
       align-items: center;
       gap: 4px;
     }
-    .card-link:hover { color: var(--accent); }
     .card-link::after { content: '→'; }
+
+    .card.color-green  .card-link { color: var(--accent); }
+    .card.color-blue   .card-link { color: var(--accent2); }
+    .card.color-orange .card-link { color: var(--accent3); }
+    .card.color-purple .card-link { color: var(--accent4); }
+    .card.color-yellow .card-link { color: var(--accent5); }
+    .card.color-teal   .card-link { color: var(--dart); }
+    .card.color-red    .card-link { color: var(--cpp); }
 
     /* fork badge */
     .fork-badge {
@@ -317,34 +457,49 @@
     /* ──────────── FOOTER ──────────── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 40px 0;
+      padding: 48px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: gap;
+      flex-wrap: wrap;
       gap: 16px;
+      margin-top: 1px;
     }
     .footer-left { font-size: 11px; color: var(--muted); }
     .footer-left span { color: var(--accent); }
-    .footer-right { font-size: 11px; color: var(--muted); }
+    .footer-right {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-right span {
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+    }
 
     /* ──────────── CURSOR BLINK ──────────── */
     .blink {
       display: inline-block;
-      width: 10px; height: 1.1em;
+      width: 12px; height: 1em;
       background: var(--accent);
       vertical-align: text-bottom;
       animation: blink 1s step-end infinite;
-      margin-left: 4px;
+      margin-left: 3px;
+      box-shadow: 0 0 12px rgba(0,229,160,0.6);
     }
     @keyframes blink { 50% { opacity: 0; } }
 
     /* ──────────── RESPONSIVE ──────────── */
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      .stat-row { gap: 20px; }
+    @media (max-width: 640px) {
+      h1 { font-size: 2.4rem; }
+      .stat-row { gap: 0; }
+      .stat { padding: 16px 20px 16px 0; }
+      .stat + .stat { padding-left: 20px; }
       .repo-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; }
+      .wrap { padding: 0 20px; }
     }
   </style>
 </head>
@@ -356,23 +511,44 @@
   <!-- ── HEADER ── -->
   <header>
     <div class="header-tag">forge suite / open source</div>
-    <h1>dev-<span>boffin</span>-io<span class="blink"></span></h1>
-    <p class="tagline">Privacy-first, offline-first Linux desktop & CLI tools — built for Debian, ARM64, and proot-Termux environments.</p>
-    <a class="gh-link" href="https://github.com/dev-boffin-io" target="_blank" rel="noopener">
-      <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      github.com/dev-boffin-io
-    </a>
+    <h1>dev-<span class="hl-green">boffin</span>-io<span class="blink"></span></h1>
+    <p class="tagline">Privacy-first, offline-first Linux desktop &amp; CLI tools — built for Debian, ARM64, and proot-Termux environments. No cloud. No telemetry.</p>
+    <div class="header-actions">
+      <a class="gh-link" href="https://github.com/dev-boffin-io" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        github.com/dev-boffin-io
+      </a>
+      <a class="vercel-link" href="https://dev-boffin-io.vercel.app" target="_blank" rel="noopener">
+        ▲ vercel deploy
+      </a>
+    </div>
     <div class="stat-row">
-      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Repositories</span></div>
-      <div class="stat"><span class="stat-num">Go + Py</span><span class="stat-label">Primary Stack</span></div>
-      <div class="stat"><span class="stat-num">MIT</span><span class="stat-label">License</span></div>
-      <div class="stat"><span class="stat-num">ARM64</span><span class="stat-label">Target Arch</span></div>
+      <div class="stat">
+        <span class="stat-num green">13</span>
+        <span class="stat-label">Repositories</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num blue">8</span>
+        <span class="stat-label">Forge Tools</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num orange">Go + Py</span>
+        <span class="stat-label">Primary Stack</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num purple">MIT</span>
+        <span class="stat-label">License</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" style="background:linear-gradient(135deg,var(--dart),#007a74);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ARM64</span>
+        <span class="stat-label">Target Arch</span>
+      </div>
     </div>
   </header>
 
   <!-- ── FILTER BAR ── -->
   <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterCards('all', this)">all (11)</button>
+    <button class="filter-btn active" onclick="filterCards('all', this)">all (13)</button>
     <button class="filter-btn" onclick="filterCards('go', this)">Go</button>
     <button class="filter-btn" onclick="filterCards('python', this)">Python</button>
     <button class="filter-btn" onclick="filterCards('cpp', this)">C++</button>
@@ -380,90 +556,23 @@
     <button class="filter-btn" onclick="filterCards('dart', this)">Dart</button>
   </div>
 
-  <!-- ── REPO GRID ── -->
+  <!-- ── FORGE SUITE SECTION ── -->
+  <div class="section-label forge-label">
+    <span>⚒ Forge Suite</span>
+    <span class="badge">8 tools</span>
+    <div class="section-divider"></div>
+  </div>
+
   <div class="repo-grid" id="grid">
 
-    <div class="card" data-lang="go" style="animation-delay:0.05s">
-      <div class="card-top">
-        <a class="card-name" href="https://github.com/dev-boffin-io/qbit-forge" target="_blank">qbit-forge</a>
-        <span class="card-icon">⚡</span>
-      </div>
-      <p class="card-desc">Lightweight, privacy-first management suite for qbittorrent-nox on Debian Linux — including ARM64 and proot-Termux environments.</p>
-      <div class="card-tags">
-        <span class="tag">linux</span><span class="tag">debian</span><span class="tag">qbittorrent</span><span class="tag">arm64</span>
-      </div>
-      <div class="card-foot">
-        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
-        <a class="card-link" href="https://github.com/dev-boffin-io/qbit-forge" target="_blank">View repo</a>
-      </div>
-    </div>
+    <!-- ── 8 FORGE REPOS ── -->
 
-    <div class="card" data-lang="cpp" style="animation-delay:0.1s">
+    <div class="card color-green" data-lang="python" style="animation-delay:0.05s">
       <div class="card-top">
-        <a class="card-name" href="https://github.com/dev-boffin-io/llama-forge" target="_blank">llama-forge</a>
-        <span class="card-icon">🦙</span>
-      </div>
-      <p class="card-desc">Local LLM desktop GUI for llama.cpp on Linux — chat, quantize, convert & inference. Pure C/C++ engine. No cloud. No telemetry.</p>
-      <div class="card-tags">
-        <span class="tag">linux</span><span class="tag">local-ai</span><span class="tag">llama-cpp</span><span class="tag">inference</span>
-      </div>
-      <div class="card-foot">
-        <div style="display:flex;align-items:center;gap:10px">
-          <span class="lang-label"><span class="lang-dot" style="background:#f34b7d"></span>C++</span>
-          <span class="fork-badge">fork</span>
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/ollama-forge" target="_blank">ollama-forge</a>
+          <span class="forge-badge">forge suite</span>
         </div>
-        <a class="card-link" href="https://github.com/dev-boffin-io/llama-forge" target="_blank">View repo</a>
-      </div>
-    </div>
-
-    <div class="card" data-lang="python" style="animation-delay:0.15s">
-      <div class="card-top">
-        <a class="card-name" href="https://github.com/dev-boffin-io/cloud-forge" target="_blank">cloud-forge</a>
-        <span class="card-icon">☁️</span>
-      </div>
-      <p class="card-desc">Turn any cloud storage (Google Drive, Dropbox, OneDrive, Mega, S3) into a fast & secure SFTP server using rclone. CLI + PyQt5 GUI.</p>
-      <div class="card-tags">
-        <span class="tag">sftp</span><span class="tag">rclone</span><span class="tag">google-drive</span><span class="tag">self-hosted</span>
-      </div>
-      <div class="card-foot">
-        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
-        <a class="card-link" href="https://github.com/dev-boffin-io/cloud-forge" target="_blank">View repo</a>
-      </div>
-    </div>
-
-    <div class="card" data-lang="go" style="animation-delay:0.2s">
-      <div class="card-top">
-        <a class="card-name" href="https://github.com/dev-boffin-io/virt-forge" target="_blank">virt-forge</a>
-        <span class="card-icon">🖥️</span>
-      </div>
-      <p class="card-desc">QEMU virtual machine manager — control utility, disk manager, and PyQt6 GUI, all written in Go and Python. Supports ARM64, x86_64, RISC-V.</p>
-      <div class="card-tags">
-        <span class="tag">qemu</span><span class="tag">vm</span><span class="tag">kvm</span><span class="tag">arm64</span>
-      </div>
-      <div class="card-foot">
-        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
-        <a class="card-link" href="https://github.com/dev-boffin-io/virt-forge" target="_blank">View repo</a>
-      </div>
-    </div>
-
-    <div class="card" data-lang="python" style="animation-delay:0.25s">
-      <div class="card-top">
-        <a class="card-name" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">sftp-forge</a>
-        <span class="card-icon">🔒</span>
-      </div>
-      <p class="card-desc">Lightweight developer toolkit for secure file transfer, automation, and remote file management using the SFTP protocol. PyQt6 GUI with sshfs mounting.</p>
-      <div class="card-tags">
-        <span class="tag">sftp</span><span class="tag">ssh</span><span class="tag">sshfs</span><span class="tag">automation</span>
-      </div>
-      <div class="card-foot">
-        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
-        <a class="card-link" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">View repo</a>
-      </div>
-    </div>
-
-    <div class="card" data-lang="python" style="animation-delay:0.3s">
-      <div class="card-top">
-        <a class="card-name" href="https://github.com/dev-boffin-io/ollama-forge" target="_blank">ollama-forge</a>
         <span class="card-icon">🤖</span>
       </div>
       <p class="card-desc">Local AI desktop GUI for Ollama on Linux — chat, RAG, multi-agent crews, model management. No cloud. No telemetry. PyQt5/PyInstaller.</p>
@@ -476,7 +585,147 @@
       </div>
     </div>
 
-    <div class="card" data-lang="go" style="animation-delay:0.35s">
+    <div class="card color-blue" data-lang="go" style="animation-delay:0.1s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/forgejo-forge" target="_blank">forgejo-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">🦊</span>
+      </div>
+      <p class="card-desc">Go CLI + PyQt6 GUI suite for managing a self-hosted Forgejo instance — setup, start/stop, logs, package registries, and full lifecycle control.</p>
+      <div class="card-tags">
+        <span class="tag">forgejo</span><span class="tag">self-hosted</span><span class="tag">git</span><span class="tag">devops</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/forgejo-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-orange" data-lang="python" style="animation-delay:0.15s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/cloud-forge" target="_blank">cloud-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">☁️</span>
+      </div>
+      <p class="card-desc">Turn any cloud storage (Google Drive, Dropbox, OneDrive, Mega, S3) into a fast &amp; secure SFTP server using rclone. CLI + PyQt5 GUI.</p>
+      <div class="card-tags">
+        <span class="tag">sftp</span><span class="tag">rclone</span><span class="tag">google-drive</span><span class="tag">self-hosted</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/cloud-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-purple" data-lang="python" style="animation-delay:0.2s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/tunnel-forge" target="_blank">tunnel-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">🚇</span>
+      </div>
+      <p class="card-desc">Cloudflared tunnel manager with a modular 13-file PyQt6 GUI — QThread signal-based worker decoupling, persistent config, and one-click tunnel control.</p>
+      <div class="card-tags">
+        <span class="tag">cloudflare</span><span class="tag">tunnel</span><span class="tag">pyqt6</span><span class="tag">networking</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/tunnel-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-yellow" data-lang="go" style="animation-delay:0.25s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/virt-forge" target="_blank">virt-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">🖥️</span>
+      </div>
+      <p class="card-desc">QEMU virtual machine manager — control utility, disk manager, and PyQt6 GUI, all written in Go and Python. Supports ARM64, x86_64, RISC-V.</p>
+      <div class="card-tags">
+        <span class="tag">qemu</span><span class="tag">vm</span><span class="tag">kvm</span><span class="tag">arm64</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/virt-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-teal" data-lang="python" style="animation-delay:0.3s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">sftp-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">🔒</span>
+      </div>
+      <p class="card-desc">Lightweight developer toolkit for secure file transfer, automation, and remote file management using the SFTP protocol. PyQt6 GUI with sshfs mounting.</p>
+      <div class="card-tags">
+        <span class="tag">sftp</span><span class="tag">ssh</span><span class="tag">sshfs</span><span class="tag">automation</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-green" data-lang="go" style="animation-delay:0.35s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/qbit-forge" target="_blank">qbit-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">⚡</span>
+      </div>
+      <p class="card-desc">Lightweight, privacy-first management suite for qbittorrent-nox on Debian Linux — single-instance PTY-based tray app with GTK webview launcher. ARM64 + proot.</p>
+      <div class="card-tags">
+        <span class="tag">linux</span><span class="tag">debian</span><span class="tag">qbittorrent</span><span class="tag">arm64</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00add8"></span>Go</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/qbit-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-red" data-lang="cpp" style="animation-delay:0.4s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/llama-forge" target="_blank">llama-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">🦙</span>
+      </div>
+      <p class="card-desc">Local LLM desktop GUI for llama.cpp on Linux — chat, quantize, convert &amp; inference. Pure C/C++ engine. No cloud. No telemetry.</p>
+      <div class="card-tags">
+        <span class="tag">linux</span><span class="tag">local-ai</span><span class="tag">llama-cpp</span><span class="tag">inference</span>
+      </div>
+      <div class="card-foot">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="lang-label"><span class="lang-dot" style="background:#f34b7d"></span>C++</span>
+          <span class="fork-badge">fork</span>
+        </div>
+        <a class="card-link" href="https://github.com/dev-boffin-io/llama-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+  </div><!-- /forge grid -->
+
+  <!-- ── OTHER TOOLS SECTION ── -->
+  <div class="section-label other-label" style="padding-top:48px">
+    <span>◈ Other Tools</span>
+    <span class="badge">5 repos</span>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="repo-grid" id="grid2">
+
+    <div class="card color-blue" data-lang="go" style="animation-delay:0.05s">
       <div class="card-top">
         <a class="card-name" href="https://github.com/dev-boffin-io/easy-ssh-dev" target="_blank">easy-ssh-dev</a>
         <span class="card-icon">🔑</span>
@@ -491,7 +740,7 @@
       </div>
     </div>
 
-    <div class="card" data-lang="python" style="animation-delay:0.4s">
+    <div class="card color-purple" data-lang="python" style="animation-delay:0.1s">
       <div class="card-top">
         <a class="card-name" href="https://github.com/dev-boffin-io/Linux-core-identity-manager" target="_blank">Linux-core-identity-manager</a>
         <span class="card-icon">🛡️</span>
@@ -506,7 +755,7 @@
       </div>
     </div>
 
-    <div class="card" data-lang="python" style="animation-delay:0.45s">
+    <div class="card color-orange" data-lang="python" style="animation-delay:0.15s">
       <div class="card-top">
         <a class="card-name" href="https://github.com/dev-boffin-io/quick-creator" target="_blank">quick-creator</a>
         <span class="card-icon">⚙️</span>
@@ -521,7 +770,7 @@
       </div>
     </div>
 
-    <div class="card" data-lang="dart" style="animation-delay:0.5s">
+    <div class="card color-teal" data-lang="dart" style="animation-delay:0.2s">
       <div class="card-top">
         <a class="card-name" href="https://github.com/dev-boffin-io/flutter-tool-dev" target="_blank">flutter-tool-dev</a>
         <span class="card-icon">🐦</span>
@@ -536,12 +785,12 @@
       </div>
     </div>
 
-    <div class="card" data-lang="go" style="animation-delay:0.55s">
+    <div class="card color-green" data-lang="go" style="animation-delay:0.25s">
       <div class="card-top">
         <a class="card-name" href="https://github.com/dev-boffin-io/dev-boffin-io" target="_blank">dev-boffin-io</a>
         <span class="card-icon">🌐</span>
       </div>
-      <p class="card-desc">GitHub profile & portfolio hub — the home of the Forge Suite. Static landing page deployed via Vercel.</p>
+      <p class="card-desc">GitHub profile &amp; portfolio hub — the home of the Forge Suite. Static landing page deployed via Vercel.</p>
       <div class="card-tags">
         <span class="tag">portfolio</span><span class="tag">profile</span><span class="tag">vercel</span>
       </div>
@@ -551,14 +800,19 @@
       </div>
     </div>
 
-  </div><!-- /grid -->
+  </div><!-- /other grid -->
 
   <!-- ── FOOTER ── -->
   <footer>
     <div class="footer-left">
       © 2026 <span>dev-boffin-io</span> — Privacy-first. Offline-first. Open Source.
     </div>
-    <div class="footer-right">MIT License · Debian · ARM64 · proot-Termux</div>
+    <div class="footer-right">
+      <span>MIT License</span>
+      <span>Debian</span>
+      <span>ARM64</span>
+      <span>proot-Termux</span>
+    </div>
   </footer>
 
 </div><!-- /wrap -->
@@ -567,12 +821,8 @@
   function filterCards(lang, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('.card').forEach(card => {
-      if (lang === 'all' || card.dataset.lang === lang) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
+    document.querySelectorAll('#grid .card, #grid2 .card').forEach(card => {
+      card.style.display = (lang === 'all' || card.dataset.lang === lang) ? 'flex' : 'none';
     });
   }
 </script>
