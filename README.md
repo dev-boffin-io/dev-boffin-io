@@ -261,7 +261,7 @@ All Forge projects welcome:
 ## 📬 Get in Touch
 
 - **GitHub**: [@dev-boffin-io](https://github.com/dev-boffin-io)
-- **Email**: dev.boffin.io@gmail.com
+- **Email**: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ccaea3aaaaa5a28ca8a9bae1aea3aaaaa5a2e2a5a3">[email&#160;protected]</a>
 - **Website**: [dev-boffin-io.vercel.app](https://dev-boffin-io.vercel.app)
 
 ---
