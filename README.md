@@ -3,7 +3,7 @@
 <p align="center">
   <strong>Independent Open Source Developer · Linux Enthusiast · Privacy Advocate</strong><br>
   <em>Crafting clean, fast, offline-first desktop &amp; CLI tools that solve real problems.</em><br>
-  Building the <strong>Forge Suite</strong> — 8 developer productivity tools for Linux power users.
+  Building the <strong>Forge Suite</strong> — 9 developer productivity tools for Linux power users.
 </p>
 
 <p align="center">
@@ -44,7 +44,7 @@ Every project starts as a solution to my own frustration with existing tools on 
 
 ## ⚒️ The Forge Suite
 
-> **8 privacy-first, offline-first tools** — all targeting Debian Linux, ARM64, and proot-Termux.
+> **9 privacy-first, offline-first tools** — all targeting Debian Linux, ARM64, and proot-Termux.
 
 | # | Tool | Category | Stack |
 |---|------|----------|-------|
@@ -56,6 +56,7 @@ Every project starts as a solution to my own frustration with existing tools on 
 | 6 | [🔒 sftp-forge](#-sftp-forge) | File Transfer | Python · PyQt6 |
 | 7 | [⚡ qbit-forge](#-qbit-forge) | Downloads | Go · Python |
 | 8 | [🦙 llama-forge](#-llama-forge) | Local AI | C++ · Python |
+| 9 | [🔑 ssh-forge](#-ssh-forge) | SSH / DevOps | Go · GTK3 |
 
 ---
 
@@ -149,16 +150,18 @@ Local LLM desktop GUI for llama.cpp. Pure C/C++ engine. Refactored into a Python
 
 ---
 
-## 🧰 Other Tools
-
-### 🔑 [easy-ssh-dev](https://github.com/dev-boffin-io/easy-ssh-dev)
+### 🔑 [ssh-forge](https://github.com/dev-boffin-io/ssh-forge)
 > *One command to rule all your SSH connections.*
 
-Passwordless SSH manager with GTK3 + VTE tabbed terminal GUI. Named profiles, automated key rotation, Catppuccin Mocha theme, Doctor dialog, and structured logging.
+Passwordless SSH manager with GTK3 + VTE tabbed terminal GUI. Named profiles, automated key rotation, Catppuccin Mocha theme, Doctor dialog, and structured logging. Full ARM64 + proot-Termux support.
+
+**Key Features:** Passwordless key setup · Named profiles · GTK3/VTE tabbed GUI · Doctor dialog · ARM64 + proot support
 
 **Tech:** `Go` · `Python` · `GTK3` · `VTE` · `Shell`
 
 ---
+
+## 🧰 Other Tools
 
 ### 🛡️ [Linux-core-identity-manager](https://github.com/dev-boffin-io/Linux-core-identity-manager)
 > *Linux user management — even inside Termux.*
