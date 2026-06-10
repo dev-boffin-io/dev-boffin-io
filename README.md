@@ -1,9 +1,9 @@
 <h1 align="center">Hi, I'm Boffin 👋</h1>
 
 <p align="center">
-  <strong>Independent Open Source Developer · Linux Enthusiast · Privacy Advocate</strong><br>
+  <strong>Independent Open Source Developer · Linux &amp; Windows · Privacy Advocate</strong><br>
   <em>Crafting clean, fast, offline-first desktop &amp; CLI tools that solve real problems.</em><br>
-  Building the <strong>Forge Suite</strong> — 9 developer productivity tools for Linux power users.
+  Building the <strong>Forge Suite</strong> — 11 developer productivity tools for Linux &amp; Windows.
 </p>
 
 <p align="center">
@@ -11,6 +11,7 @@
   <img src="https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white" />
   <img src="https://img.shields.io/badge/Qt-41CD52?logo=qt&logoColor=white" />
   <img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" />
+  <img src="https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=white" />
   <img src="https://img.shields.io/badge/Local_AI-FF6A00?logoColor=white" />
   <img src="https://img.shields.io/badge/Shell_Scripting-4EAA25?logo=gnubash&logoColor=white" />
   <img src="https://img.shields.io/badge/QEMU-FF6600?logoColor=white" />
@@ -44,7 +45,7 @@ Every project starts as a solution to my own frustration with existing tools on 
 
 ## ⚒️ The Forge Suite
 
-> **9 privacy-first, offline-first tools** — all targeting Debian Linux, ARM64, and proot-Termux.
+> **11 privacy-first, offline-first tools** — targeting Debian Linux, Windows, ARM64, and proot-Termux.
 
 | # | Tool | Category | Stack |
 |---|------|----------|-------|
@@ -57,6 +58,8 @@ Every project starts as a solution to my own frustration with existing tools on 
 | 7 | [⚡ qbit-forge](#-qbit-forge) | Downloads | Go · Python |
 | 8 | [🦙 llama-forge](#-llama-forge) | Local AI | C++ · Python |
 | 9 | [🔑 ssh-forge](#-ssh-forge) | SSH / DevOps | Go · GTK3 |
+| 10 | [📡 share-forge](#-share-forge) | File Sharing | Python · PyQt6 · Flask |
+| 11 | [🐍 py-forge](#-py-forge) | Dev Tools / Learning | Python · PyQt6 |
 
 ---
 
@@ -76,9 +79,11 @@ Feature-rich PyQt5 GUI for [Ollama](https://ollama.com). Full LLM power without 
 
 Go CLI + PyQt6 GUI suite for managing a self-hosted Forgejo instance. Supports both systemd and proot-Termux modes. Includes Forge Drive — a Flask frontend proxying the Forgejo REST API with a GitHub-style dark UI.
 
-**Key Features:** Full lifecycle control (start/stop/logs) · Forgejo REST API proxy (Forge Drive) · proot + systemd dual-mode · Runtime-configurable settings · Package registry management
+**Key Features:** Full lifecycle control (start/stop/logs) · Forgejo REST API proxy (Forge Drive) · proot + systemd dual-mode · Runtime-configurable settings · Package registry management · Windows support (Gitea fallback)
 
 **Tech:** `Go` · `Python` · `PyQt6` · `Flask` · `Forgejo REST API`
+
+> 🪟 *Windows supported — routes to Gitea when Forgejo binary is unavailable*
 
 ---
 
@@ -161,6 +166,32 @@ Passwordless SSH manager with GTK3 + VTE tabbed terminal GUI. Named profiles, au
 
 ---
 
+### 📡 [share-forge](https://github.com/dev-boffin-io/share-forge)
+> *LAN file sharing — one click, any device.*
+
+PyQt6 desktop app with a Flask backend for zero-config LAN file sharing. Drag-and-drop upload, forced-download route, dark UI with font fallback, and breadcrumb navigation. Cross-platform: Linux and Windows builds via GitHub Actions.
+
+**Key Features:** PyQt6 dark UI · Flask file server · Drag-and-drop · Forced-download route · Breadcrumb nav · `.gitignore` generation · Windows & Linux builds
+
+**Tech:** `Python` · `PyQt6` · `Flask` · `PyInstaller`
+
+> 🪟 *Windows supported — pre-built `.exe` available via GitHub Actions*
+
+---
+
+### 🐍 [py-forge](https://github.com/dev-boffin-io/py-forge)
+> *Python learning + dev environment — all in one GUI.*
+
+PyQt6 desktop app combining a Bengali-language Python typing trainer, a full code editor with syntax highlighting and `QProcess` run/stop, and a Python Manager tab for OS-aware version detection, PATH management, and installation. Cross-platform: Linux and Windows.
+
+**Key Features:** 93 learning modes · Full code editor · Python Manager tab · OS-aware Python detection · PATH management · Auto pip install · Windows & Linux builds
+
+**Tech:** `Python` · `PyQt6` · `PyInstaller`
+
+> 🪟 *Windows supported — pre-built `.exe` available via GitHub Actions*
+
+---
+
 ## 🧰 Other Tools
 
 ### 🛡️ [Linux-core-identity-manager](https://github.com/dev-boffin-io/Linux-core-identity-manager)
@@ -169,15 +200,6 @@ Passwordless SSH manager with GTK3 + VTE tabbed terminal GUI. Named profiles, au
 PyQt6 GUI for Linux user accounts. Works correctly in both standard desktop and proot/Termux environments. Protected primary user detection, lock/unlock accounts, sudo management.
 
 **Tech:** `Python` · `PyQt6`
-
----
-
-### ⚙️ [quick-creator](https://github.com/dev-boffin-io/quick-creator)
-> *From zero to project structure in seconds.*
-
-Lightning-fast project scaffolding. Config-driven templates for Python, Go, Flutter, PyQt5/6, Shell. Auto-generates README, LICENSE, CI stubs.
-
-**Tech:** `Go` · `Shell`
 
 ---
 
@@ -200,8 +222,8 @@ CLI installer that downloads, installs, and manages Flutter SDK on ARM64 Linux v
 | **Virtualization** | QEMU · KVM · libvirt |
 | **Cloud / Storage** | rclone · SFTP · Google Drive · S3 · Dropbox |
 | **Networking** | cloudflared · SSH · sshfs · Forgejo REST API |
-| **Packaging** | PyInstaller · AppImage · .deb · Go modules |
-| **Platforms** | Linux (primary) · ARM64 · proot-Termux |
+| **Packaging** | PyInstaller · AppImage · .deb · Go modules · Windows `.exe` |
+| **Platforms** | Linux (primary) · Windows · ARM64 · proot-Termux |
 | **Dev Tools** | GitHub Actions · Git · flock · systemd |
 
 ---
@@ -230,10 +252,6 @@ CLI installer that downloads, installs, and manages Flutter SDK on ARM64 Linux v
 
 <div align="center">
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=dev-boffin-io&layout=compact&theme=radical&hide_border=true&langs_count=4" />
-</div>
-
-<div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=dev-boffin-io&theme=radical&hide_border=true" />
 </div>
 
 <div align="center">
