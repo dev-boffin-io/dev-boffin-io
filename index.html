@@ -512,7 +512,7 @@
   <header>
     <div class="header-tag">forge suite / open source</div>
     <h1>dev-<span class="hl-green">boffin</span>-io<span class="blink"></span></h1>
-    <p class="tagline">Privacy-first, offline-first Linux desktop &amp; CLI tools — built for Debian, ARM64, and proot-Termux environments. No cloud. No telemetry.</p>
+    <p class="tagline">Privacy-first, offline-first Linux desktop &amp; CLI tools — now expanding to Android. Built for Debian, ARM64, proot-Termux, and mobile. No cloud. No telemetry.</p>
     <div class="header-actions">
       <a class="gh-link" href="https://github.com/dev-boffin-io" target="_blank" rel="noopener">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -524,11 +524,11 @@
     </div>
     <div class="stat-row">
       <div class="stat">
-        <span class="stat-num green">13</span>
+        <span class="stat-num green">19</span>
         <span class="stat-label">Repositories</span>
       </div>
       <div class="stat">
-        <span class="stat-num blue">8</span>
+        <span class="stat-num blue">13</span>
         <span class="stat-label">Forge Tools</span>
       </div>
       <div class="stat">
@@ -543,29 +543,33 @@
         <span class="stat-num" style="background:linear-gradient(135deg,var(--dart),#007a74);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ARM64</span>
         <span class="stat-label">Target Arch</span>
       </div>
+      <div class="stat">
+        <span class="stat-num" style="background:linear-gradient(135deg,#3DDC84,#1a8f4e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3</span>
+        <span class="stat-label">Android Apps</span>
+      </div>
     </div>
   </header>
 
   <!-- ── FILTER BAR ── -->
   <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterCards('all', this)">all (13)</button>
+    <button class="filter-btn active" onclick="filterCards('all', this)">all (18)</button>
     <button class="filter-btn" onclick="filterCards('go', this)">Go</button>
     <button class="filter-btn" onclick="filterCards('python', this)">Python</button>
     <button class="filter-btn" onclick="filterCards('cpp', this)">C++</button>
-    <button class="filter-btn" onclick="filterCards('shell', this)">Shell</button>
     <button class="filter-btn" onclick="filterCards('dart', this)">Dart</button>
+    <button class="filter-btn" onclick="filterCards('kotlin', this)">Kotlin</button>
   </div>
 
   <!-- ── FORGE SUITE SECTION ── -->
   <div class="section-label forge-label">
     <span>⚒ Forge Suite</span>
-    <span class="badge">11 tools</span>
+    <span class="badge">13 tools</span>
     <div class="section-divider"></div>
   </div>
 
   <div class="repo-grid" id="grid">
 
-    <!-- ── 8 FORGE REPOS ── -->
+    <!-- ── 13 FORGE REPOS ── -->
 
     <div class="card color-green" data-lang="python" style="animation-delay:0.05s">
       <div class="card-top">
@@ -657,7 +661,7 @@
       </div>
     </div>
 
-    <div class="card color-teal" data-lang="python" style="animation-delay:0.3s">
+    <div class="card color-teal" data-lang="dart" style="animation-delay:0.3s">
       <div class="card-top">
         <div class="card-name-wrap">
           <a class="card-name" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">sftp-forge</a>
@@ -665,12 +669,12 @@
         </div>
         <span class="card-icon">🔒</span>
       </div>
-      <p class="card-desc">Lightweight developer toolkit for secure file transfer, automation, and remote file management using the SFTP protocol. PyQt6 GUI with sshfs mounting.</p>
+      <p class="card-desc">Lightweight developer toolkit for secure file transfer, automation, and remote file management using the SFTP protocol. Rewritten in Flutter — Linux &amp; Android.</p>
       <div class="card-tags">
-        <span class="tag">sftp</span><span class="tag">ssh</span><span class="tag">sshfs</span><span class="tag">automation</span>
+        <span class="tag">sftp</span><span class="tag">ssh</span><span class="tag">automation</span><span class="tag" style="background:rgba(61,220,132,0.15);color:#3ddc84;border-color:rgba(61,220,132,0.3)">android</span>
       </div>
       <div class="card-foot">
-        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <span class="lang-label"><span class="lang-dot" style="background:#00b4ab"></span>Dart</span>
         <a class="card-link" href="https://github.com/dev-boffin-io/sftp-forge" target="_blank">View repo</a>
       </div>
     </div>
@@ -768,12 +772,113 @@
       </div>
     </div>
 
+    <div class="card color-blue" data-lang="python" style="animation-delay:0.6s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/funnel-forge" target="_blank">funnel-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">🌐</span>
+      </div>
+      <p class="card-desc">PyQt6 GUI for managing a Tailscale Funnel — expose a local web server to the public internet with one click. No port-forwarding.</p>
+      <div class="card-tags">
+        <span class="tag">tailscale</span><span class="tag">funnel</span><span class="tag">networking</span><span class="tag">self-hosted</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/funnel-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-orange" data-lang="python" style="animation-delay:0.65s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/gh-forge" target="_blank">gh-forge</a>
+          <span class="forge-badge">forge suite</span>
+        </div>
+        <span class="card-icon">🔧</span>
+      </div>
+      <p class="card-desc">Bundled GUI featuring a local multi-remote Git Manager and a gh CLI-powered GitHub Actions Manager for workflow and storage cleanup.</p>
+      <div class="card-tags">
+        <span class="tag">git</span><span class="tag">github-actions</span><span class="tag">gh-cli</span><span class="tag">devops</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/gh-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
   </div><!-- /forge grid -->
+
+  <!-- ── ANDROID LAB SECTION ── -->
+  <div class="section-label forge-label" style="padding-top:48px">
+    <span>📱 Android Lab</span>
+    <span class="badge">3 repos</span>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="repo-grid" id="grid-android">
+
+    <div class="card color-teal" data-lang="dart" style="animation-delay:0.1s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/mind-forge-pro" target="_blank">mind-forge-pro</a>
+          <span class="forge-badge" style="color:#3ddc84;border-color:rgba(61,220,132,0.3);background:rgba(61,220,132,0.05)">android</span>
+        </div>
+        <span class="card-icon">🧠</span>
+      </div>
+      <p class="card-desc">An offline, autonomous agentic AI personal assistant for Android. Powered by native llama.cpp, Flutter, and local RAG architecture for absolute privacy.</p>
+      <div class="card-tags">
+        <span class="tag">android</span><span class="tag">local-ai</span><span class="tag">rag</span><span class="tag">flutter</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#00b4ab"></span>Dart</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/mind-forge-pro" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-purple" data-lang="kotlin" style="animation-delay:0.15s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/vm-forge" target="_blank">vm-forge</a>
+          <span class="forge-badge" style="color:#3ddc84;border-color:rgba(61,220,132,0.3);background:rgba(61,220,132,0.05)">android</span>
+        </div>
+        <span class="card-icon">🖥️</span>
+      </div>
+      <p class="card-desc">Native QEMU virtual machine launcher for Android — run ARM64 Linux VMs natively on-device, without root.</p>
+      <div class="card-tags">
+        <span class="tag">android</span><span class="tag">qemu</span><span class="tag">kvm</span><span class="tag">arm64</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#7F52FF"></span>Kotlin</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/vm-forge" target="_blank">View repo</a>
+      </div>
+    </div>
+
+    <div class="card color-red" data-lang="python" style="animation-delay:0.2s">
+      <div class="card-top">
+        <div class="card-name-wrap">
+          <a class="card-name" href="https://github.com/dev-boffin-io/boffin_wayland" target="_blank">boffin_wayland</a>
+          <span class="forge-badge" style="color:#3ddc84;border-color:rgba(61,220,132,0.3);background:rgba(61,220,132,0.05)">android</span>
+        </div>
+        <span class="card-icon">💻</span>
+      </div>
+      <p class="card-desc">Standalone Android terminal emulator built with a C++ NDK pseudo-terminal and a Kivy frontend.</p>
+      <div class="card-tags">
+        <span class="tag">android</span><span class="tag">terminal</span><span class="tag">kivy</span><span class="tag">ndk</span>
+      </div>
+      <div class="card-foot">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
+        <a class="card-link" href="https://github.com/dev-boffin-io/boffin_wayland" target="_blank">View repo</a>
+      </div>
+    </div>
+
+  </div><!-- /android grid -->
 
   <!-- ── OTHER TOOLS SECTION ── -->
   <div class="section-label other-label" style="padding-top:48px">
     <span>◈ Other Tools</span>
-    <span class="badge">3 repos</span>
+    <span class="badge">2 repos</span>
     <div class="section-divider"></div>
   </div>
 
@@ -791,21 +896,6 @@
       <div class="card-foot">
         <span class="lang-label"><span class="lang-dot" style="background:#3572a5"></span>Python</span>
         <a class="card-link" href="https://github.com/dev-boffin-io/Linux-core-identity-manager" target="_blank">View repo</a>
-      </div>
-    </div>
-
-    <div class="card color-teal" data-lang="dart" style="animation-delay:0.15s">
-      <div class="card-top">
-        <a class="card-name" href="https://github.com/dev-boffin-io/flutter-tool-dev" target="_blank">flutter-tool-dev</a>
-        <span class="card-icon">🐦</span>
-      </div>
-      <p class="card-desc">Flutter ARM64 Installer CLI tool — downloads, installs, and manages Flutter SDK on ARM64 Linux via community-maintained GitHub releases.</p>
-      <div class="card-tags">
-        <span class="tag">flutter</span><span class="tag">dart</span><span class="tag">arm64</span><span class="tag">sdk</span>
-      </div>
-      <div class="card-foot">
-        <span class="lang-label"><span class="lang-dot" style="background:#00b4ab"></span>Shell / Dart</span>
-        <a class="card-link" href="https://github.com/dev-boffin-io/flutter-tool-dev" target="_blank">View repo</a>
       </div>
     </div>
 
@@ -830,11 +920,13 @@
   <footer>
     <div class="footer-left">
       © 2026 <span>dev-boffin-io</span> — Privacy-first. Offline-first. Open Source.
+      &nbsp;·&nbsp;<a href="https://git.bowfin-pleco.ts.net/" target="_blank" rel="noopener" style="color:var(--muted2)">self-hosted git ↗</a>
     </div>
     <div class="footer-right">
       <span>MIT License</span>
       <span>Debian</span>
       <span>Windows</span>
+      <span>Android</span>
       <span>ARM64</span>
       <span>proot-Termux</span>
     </div>
@@ -846,7 +938,7 @@
   function filterCards(lang, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('#grid .card, #grid2 .card').forEach(card => {
+    document.querySelectorAll('#grid .card, #grid-android .card, #grid2 .card').forEach(card => {
       card.style.display = (lang === 'all' || card.dataset.lang === lang) ? 'flex' : 'none';
     });
   }

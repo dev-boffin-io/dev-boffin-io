@@ -1,9 +1,9 @@
 <h1 align="center">Hi, I'm Boffin 👋</h1>
 
 <p align="center">
-  <strong>Independent Open Source Developer · Linux &amp; Windows · Privacy Advocate</strong><br>
-  <em>Crafting clean, fast, offline-first desktop &amp; CLI tools that solve real problems.</em><br>
-  Building the <strong>Forge Suite</strong> — 11 developer productivity tools for Linux &amp; Windows.
+  <strong>Independent Open Source Developer · Linux, Windows &amp; Android</strong><br>
+  <em>Crafting clean, fast, offline-first desktop, CLI &amp; mobile tools that solve real problems.</em><br>
+  Building the <strong>Forge Suite</strong> — 13 developer productivity tools, now expanding onto Android.
 </p>
 
 <p align="center">
@@ -12,10 +12,14 @@
   <img src="https://img.shields.io/badge/Qt-41CD52?logo=qt&logoColor=white" />
   <img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" />
   <img src="https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=white" />
+  <img src="https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white" />
+  <img src="https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white" />
   <img src="https://img.shields.io/badge/Local_AI-FF6A00?logoColor=white" />
   <img src="https://img.shields.io/badge/Shell_Scripting-4EAA25?logo=gnubash&logoColor=white" />
   <img src="https://img.shields.io/badge/QEMU-FF6600?logoColor=white" />
   <img src="https://img.shields.io/badge/rclone-3D4FC4?logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailscale-242938?logo=tailscale&logoColor=white" />
   <img src="https://img.shields.io/badge/100%25_Open_Source-4CAF50?logo=opensource&logoColor=white" />
 </p>
 
@@ -37,6 +41,7 @@ Every project starts as a solution to my own frustration with existing tools on 
 - ⚡ **Performance** — startup in milliseconds, not seconds
 - 🎯 **Minimal dependencies** — ship as AppImage or single binary whenever possible
 - 🐧 **Linux as a first-class platform** — not an afterthought
+- 📱 **Now going mobile** — porting the same offline-first philosophy to Android
 - 🤝 **Open source by default** — MIT-licensed and contribution-friendly
 
 > *"The best tool is the one you actually use."*
@@ -45,28 +50,30 @@ Every project starts as a solution to my own frustration with existing tools on 
 
 ## ⚒️ The Forge Suite
 
-> **11 privacy-first, offline-first tools** — targeting Debian Linux, Windows, ARM64, and proot-Termux.
+> **13 privacy-first, offline-first tools** — targeting Debian Linux, Windows, ARM64, and proot-Termux.
 
 | # | Tool | Category | Stack |
 |---|------|----------|-------|
-| 1 | [🤖 ollama-forge](#-ollama-forge) | Local AI | Python · PyQt5 |
+| 1 | [🤖 ollama-forge](#-ollama-forge) | Local AI | Python · PyQt6 |
 | 2 | [🦊 forgejo-forge](#-forgejo-forge) | Git / DevOps | Go · PyQt6 |
 | 3 | [☁️ cloud-forge](#️-cloud-forge) | Cloud / Storage | Go · Python · PyQt5 |
 | 4 | [🚇 tunnel-forge](#-tunnel-forge) | Networking | Python · PyQt6 |
 | 5 | [🖥️ virt-forge](#️-virt-forge) | Virtualization | Go · Python · PyQt6 |
-| 6 | [🔒 sftp-forge](#-sftp-forge) | File Transfer | Python · PyQt6 |
+| 6 | [🔒 sftp-forge](#-sftp-forge) | File Transfer | Flutter · Dart · Python · PyQt6 |
 | 7 | [⚡ qbit-forge](#-qbit-forge) | Downloads | Go · Python |
 | 8 | [🦙 llama-forge](#-llama-forge) | Local AI | C++ · Python |
 | 9 | [🔑 ssh-forge](#-ssh-forge) | SSH / DevOps | Go · GTK3 |
 | 10 | [📡 share-forge](#-share-forge) | File Sharing | Python · PyQt6 · Flask |
 | 11 | [🐍 py-forge](#-py-forge) | Dev Tools / Learning | Python · PyQt6 |
+| 12 | [🌐 funnel-forge](#-funnel-forge) | Networking | Python · PyQt6 |
+| 13 | [🔧 gh-forge](#-gh-forge) | Git / DevOps | Python · PyQt6 |
 
 ---
 
 ### 🤖 [ollama-forge](https://github.com/dev-boffin-io/ollama-forge)
 > *Powerful local AI desktop app — fully offline, fully yours.*
 
-Feature-rich PyQt5 GUI for [Ollama](https://ollama.com). Full LLM power without sending a byte to the cloud. Includes a Chainlit + terminal REPL `dev-assist` component for AI-powered DevOps workflows.
+Feature-rich PyQt6 GUI for [Ollama](https://ollama.com). Full LLM power without sending a byte to the cloud. Includes a Chainlit + terminal REPL `dev-assist` component for AI-powered DevOps workflows.
 
 **Key Features:** Multi-turn chat · RAG knowledge base · Multi-agent Crew system · Model Manager · `dev-assist` AI DevOps REPL · SQLite schema migration · AppImage packaging
 
@@ -121,13 +128,15 @@ Full-featured VM manager on QEMU/KVM with PyQt6 GUI and Go CLI. No overhead of G
 ---
 
 ### 🔒 [sftp-forge](https://github.com/dev-boffin-io/sftp-forge)
-> *The SFTP client that gets out of your way.*
+> *The SFTP client that gets out of your way — now in your pocket too.*
 
-Lightweight SFTP automation toolkit with batch transfers, auto-sync, sshfs mounting, and a single-file PyQt6 dark UI. QThread-safe design throughout.
+Rewritten from the ground up in Flutter for secure file transfer, automation, and remote file management over SFTP. Same offline-first philosophy, now cross-platform on Linux **and Android**.
 
-**Key Features:** Batch transfers · Auto-sync rules · Named remotes · sshfs mounting · QThread-safe design
+**Key Features:** Cross-platform Flutter UI · Secure file transfer · Automation · Remote file management · Linux + Android builds
 
-**Tech:** `Python` · `PyQt6` · `sshfs` · `paramiko`
+**Tech:** `Flutter` · `Dart`
+
+> 📱 *Android supported — first Forge tool to ship a mobile build*
 
 ---
 
@@ -192,6 +201,59 @@ PyQt6 desktop app combining a Bengali-language Python typing trainer, a full cod
 
 ---
 
+### 🌐 [funnel-forge](https://github.com/dev-boffin-io/funnel-forge)
+> *Take a local server public — one click, one tunnel.*
+
+PyQt6 GUI for managing a Tailscale Funnel, exposing a local web server to the public internet without port-forwarding or a reverse proxy to babysit. This is what puts `git.bowfin-pleco.ts.net` (see [Self-Hosted Git](#-self-hosted-git) below) on the open internet.
+
+**Key Features:** One-click Funnel start/stop · Status monitoring · No manual port-forwarding
+
+**Tech:** `Python` · `PyQt6` · `Tailscale Funnel`
+
+---
+
+### 🔧 [gh-forge](https://github.com/dev-boffin-io/gh-forge)
+> *Git remotes and GitHub Actions, one GUI.*
+
+Bundled GUI pairing a local multi-remote Git Manager with a `gh` CLI-powered GitHub Actions Manager for workflow runs and storage cleanup.
+
+**Key Features:** Multi-remote Git management · GitHub Actions workflow manager · Storage/cache cleanup via `gh` CLI
+
+**Tech:** `Python` · `PyQt6` · `gh CLI`
+
+---
+
+## 📱 Going Mobile — Android Lab
+
+> New territory: taking the offline-first, no-telemetry philosophy of the Forge Suite onto Android.
+
+### 🧠 [mind-forge-pro](https://github.com/dev-boffin-io/mind-forge-pro)
+> *An agentic AI assistant that never leaves your phone.*
+
+Offline, autonomous agentic AI personal assistant for Android, powered by native `llama.cpp`, Flutter, and a local RAG architecture — full assistant capability with absolute privacy, no cloud round-trip.
+
+**Tech:** `Flutter` · `Dart` · `llama.cpp` (native) · Local RAG
+
+---
+
+### 🖥️ [vm-forge](https://github.com/dev-boffin-io/vm-forge)
+> *A Linux VM in your pocket. No root required.*
+
+Native QEMU virtual machine launcher for Android, running ARM64 Linux VMs directly on-device without root.
+
+**Tech:** `Kotlin` · `QEMU` · `KVM` · `ARM64`
+
+---
+
+### 💻 [boffin_wayland](https://github.com/dev-boffin-io/boffin_wayland)
+> *A real terminal emulator for Android.*
+
+Standalone Android terminal emulator built on a C++ NDK pseudo-terminal with a Kivy frontend.
+
+**Tech:** `Python` (Kivy) · `C++` (NDK)
+
+---
+
 ## 🧰 Other Tools
 
 ### 🛡️ [Linux-core-identity-manager](https://github.com/dev-boffin-io/Linux-core-identity-manager)
@@ -203,28 +265,19 @@ PyQt6 GUI for Linux user accounts. Works correctly in both standard desktop and 
 
 ---
 
-### 🐦 [flutter-tool-dev](https://github.com/dev-boffin-io/flutter-tool-dev)
-> *Flutter SDK on ARM64 Linux — painlessly.*
-
-CLI installer that downloads, installs, and manages Flutter SDK on ARM64 Linux via community-maintained GitHub releases.
-
-**Tech:** `Shell` · `Dart`
-
----
-
 ## 🛠️ Tech Stack
 
 | Category | Technologies |
 |---|---|
-| **Languages** | Python · Go · C++ · Shell (POSIX/Bash) |
-| **GUI Frameworks** | PyQt5 · PyQt6 · GTK3 · VTE · Chainlit |
+| **Languages** | Python · Go · C++ · Dart · Kotlin · Shell (POSIX/Bash) |
+| **GUI Frameworks** | PyQt5 · PyQt6 · GTK3 · VTE · Flutter · Kivy · Chainlit |
 | **AI / ML** | Ollama · llama.cpp · RAG pipelines · multi-agent |
 | **Virtualization** | QEMU · KVM · libvirt |
 | **Cloud / Storage** | rclone · SFTP · Google Drive · S3 · Dropbox |
-| **Networking** | cloudflared · SSH · sshfs · Forgejo REST API |
-| **Packaging** | PyInstaller · AppImage · .deb · Go modules · Windows `.exe` |
-| **Platforms** | Linux (primary) · Windows · ARM64 · proot-Termux |
-| **Dev Tools** | GitHub Actions · Git · flock · systemd |
+| **Networking** | cloudflared · Tailscale Funnel · SSH · sshfs · Forgejo REST API |
+| **Packaging** | PyInstaller · AppImage · .deb · Go modules · Windows `.exe` · Android `.apk` |
+| **Platforms** | Linux (primary) · Windows · Android · ARM64 · proot-Termux |
+| **Dev Tools** | GitHub Actions · Git · gh CLI · flock · systemd |
 
 ---
 
@@ -241,6 +294,7 @@ CLI installer that downloads, installs, and manages Flutter SDK on ARM64 Linux v
 
 ## 🚀 Roadmap
 
+- [ ] Bring the rest of the Forge Suite to Android, following `sftp-forge`
 - [ ] Release **AppImage + .deb** packages for every Forge tool
 - [ ] Add **automated CI/CD** with GitHub Actions across all projects
 - [ ] Write **contribution guides** and open `good-first-issue` labels
@@ -262,6 +316,16 @@ CLI installer that downloads, installs, and manages Flutter SDK on ARM64 Linux v
 
 ---
 
+## 🌐 Self-Hosted Git
+
+I run my own [Forgejo](https://forgejo.org) instance, managed with **forgejo-forge** and pushed onto the open internet with **funnel-forge** (Tailscale Funnel) — no third-party Git host in the loop for my daily driver work.
+
+**🔗 [git.bowfin-pleco.ts.net](https://git.bowfin-pleco.ts.net/)** — self-hosted Forgejo, publicly reachable via Tailscale Funnel.
+
+> ⚠️ It's a personal instance, not a mirror of this GitHub org — expect it to go offline occasionally when the host machine is off. GitHub remains the primary, always-on home for all Forge Suite source code.
+
+---
+
 ## 🤝 Open for Collaboration
 
 All Forge projects welcome:
@@ -275,7 +339,7 @@ All Forge projects welcome:
 
 ## 🙏 Acknowledgements
 
-[Ollama](https://ollama.com) · [rclone](https://rclone.org) · [QEMU](https://www.qemu.org) · [Qt / PyQt](https://riverbankcomputing.com) · [PyInstaller](https://pyinstaller.org) · [Forgejo](https://forgejo.org) · [cloudflared](https://github.com/cloudflare/cloudflared) · [llama.cpp](https://github.com/ggerganov/llama.cpp) · [OpenSSH](https://www.openssh.com) · [Python](https://python.org) · [Go](https://go.dev) · [GTK](https://gtk.org) · [VTE](https://wiki.gnome.org/Apps/Terminal/VTE)
+[Ollama](https://ollama.com) · [rclone](https://rclone.org) · [QEMU](https://www.qemu.org) · [Qt / PyQt](https://riverbankcomputing.com) · [PyInstaller](https://pyinstaller.org) · [Forgejo](https://forgejo.org) · [cloudflared](https://github.com/cloudflare/cloudflared) · [Tailscale](https://tailscale.com) · [llama.cpp](https://github.com/ggerganov/llama.cpp) · [Flutter](https://flutter.dev) · [Kivy](https://kivy.org) · [GitHub CLI](https://cli.github.com) · [OpenSSH](https://www.openssh.com) · [Python](https://python.org) · [Go](https://go.dev) · [Kotlin](https://kotlinlang.org) · [GTK](https://gtk.org) · [VTE](https://wiki.gnome.org/Apps/Terminal/VTE)
 
 ---
 
@@ -284,9 +348,10 @@ All Forge projects welcome:
 - **GitHub**: [@dev-boffin-io](https://github.com/dev-boffin-io)
 - **Email**: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ccaea3aaaaa5a28ca8a9bae1aea3aaaaa5a2e2a5a3">[email&#160;protected]</a>
 - **Website**: [dev-boffin-io.vercel.app](https://dev-boffin-io.vercel.app)
+- **Self-hosted Git**: [git.bowfin-pleco.ts.net](https://git.bowfin-pleco.ts.net/)
 
 ---
 
 <p align="center">
-  <em>Built with 🔨 on Debian · ARM64 · proot-Termux · <strong>MIT License</strong></em>
+  <em>Built with 🔨 on Debian · ARM64 · proot-Termux · Android · <strong>MIT License</strong></em>
 </p>
