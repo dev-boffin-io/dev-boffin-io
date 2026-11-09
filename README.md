@@ -3,15 +3,17 @@
 <p align="center">
   <strong>Independent Open Source Developer · Linux, Windows &amp; Android</strong><br>
   <em>Crafting clean, fast, offline-first desktop, CLI &amp; mobile tools that solve real problems.</em><br>
-  Building the <strong>Forge Suite</strong> — 13 developer productivity tools, now expanding onto Android.
+  Building the <strong>Forge Suite</strong> — 16 developer productivity tools, now expanding onto Android.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" />
   <img src="https://img.shields.io/badge/Qt-41CD52?logo=qt&logoColor=white" />
   <img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" />
   <img src="https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=white" />
+  <img src="https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white" />
   <img src="https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white" />
   <img src="https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white" />
   <img src="https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white" />
@@ -24,7 +26,7 @@
 </p>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=dev-boffin-io&color=blueviolet&style=flat-square&label=Profile+Views" />
+  <a href="https://dev-boffin-io.github.io"><img src="https://img.shields.io/badge/Portfolio-dev--boffin--io.github.io-00E5A0?style=flat-square" /></a>
 </p>
 
 ---
@@ -50,56 +52,59 @@ Every project starts as a solution to my own frustration with existing tools on 
 
 ## ⚒️ The Forge Suite
 
-> **13 privacy-first, offline-first tools** — targeting Debian Linux, Windows, ARM64, and proot-Termux.
+> **16 privacy-first, offline-first tools** — across the Forge Suite, Android Lab and AI studios — targeting Debian Linux, Windows, macOS, ARM64, and proot-Termux.
 
 | # | Tool | Category | Stack |
 |---|------|----------|-------|
-| 1 | [🤖 ollama-forge](#-ollama-forge) | Local AI | Python · PyQt6 |
+| 1 | [🤖 ollama-forge](#-ollama-forge) | Local AI | JavaScript · Node.js |
 | 2 | [🦊 forgejo-forge](#-forgejo-forge) | Git / DevOps | Go · PyQt6 |
 | 3 | [☁️ cloud-forge](#️-cloud-forge) | Cloud / Storage | Go · Python · PyQt5 |
 | 4 | [🚇 tunnel-forge](#-tunnel-forge) | Networking | Python · PyQt6 |
 | 5 | [🖥️ virt-forge](#️-virt-forge) | Virtualization | Go · Python · PyQt6 |
-| 6 | [🔒 sftp-forge](#-sftp-forge) | File Transfer | Flutter · Dart · Python · PyQt6 |
-| 7 | [⚡ qbit-forge](#-qbit-forge) | Downloads | Go · Python |
+| 6 | [🔒 sftp-forge](#-sftp-forge) | File Transfer | Flutter · Dart |
+| 7 | [⚡ qbit-forge](#-qbit-forge) | Downloads | Go · Python · PyQt6 |
 | 8 | [🦙 llama-forge](#-llama-forge) | Local AI | C++ · Python |
 | 9 | [🔑 ssh-forge](#-ssh-forge) | SSH / DevOps | Go · GTK3 |
 | 10 | [📡 share-forge](#-share-forge) | File Sharing | Python · PyQt6 · Flask |
 | 11 | [🐍 py-forge](#-py-forge) | Dev Tools / Learning | Python · PyQt6 |
 | 12 | [🌐 funnel-forge](#-funnel-forge) | Networking | Python · PyQt6 |
 | 13 | [🔧 gh-forge](#-gh-forge) | Git / DevOps | Python · PyQt6 |
+| 14 | [💻 terminal-forge](#-terminal-forge) | Android / Terminal | C · Android |
+| 15 | [🎨 ollama-forge-studio](#-ollama-forge-studio) | AI / Studio | JavaScript · Node.js |
+| 16 | [🧭 agent-forge-studio](#-agent-forge-studio) | AI / Agents | JavaScript · Node.js · Playwright |
 
 ---
 
 ### 🤖 [ollama-forge](https://github.com/dev-boffin-io/ollama-forge)
-> *Powerful local AI desktop app — fully offline, fully yours.*
+> *A zero-dependency web UI + CLI manager for Ollama — one self-contained binary.*
 
-Feature-rich PyQt6 GUI for [Ollama](https://ollama.com). Full LLM power without sending a byte to the cloud. Includes a Chainlit + terminal REPL `dev-assist` component for AI-powered DevOps workflows.
+Manage [Ollama](https://ollama.com) from a browser or the terminal. Start and stop the server, browse, pull, create, push and remove models, chat with them, sign in to ollama.com, and install, upgrade or uninstall the Ollama binary. Compiles to a single self-contained executable.
 
-**Key Features:** Multi-turn chat · RAG knowledge base · Multi-agent Crew system · Model Manager · `dev-assist` AI DevOps REPL · SQLite schema migration · AppImage packaging
+**Key Features:** Web UI + CLI · Start/stop the Ollama server · Browse/pull/create/push/remove models · Chat with models · ollama.com sign-in · Install/upgrade/version-check/uninstall · Single-binary build (Node SEA)
 
-**Tech:** `Python` · `PyQt5` · `Ollama REST API` · `Chainlit` · `PyInstaller`
+**Tech:** `JavaScript` · `Node.js` (standard library only) · `Node SEA` · `Ollama REST API`
 
 ---
 
 ### 🦊 [forgejo-forge](https://github.com/dev-boffin-io/forgejo-forge)
 > *Self-hosted Forgejo — fully managed from CLI or GUI.*
 
-Go CLI + PyQt6 GUI suite for managing a self-hosted Forgejo instance. Supports both systemd and proot-Termux modes. Includes Forge Drive — a Flask frontend proxying the Forgejo REST API with a GitHub-style dark UI.
+Self-contained Git forge management suite with a Go CLI and a PyQt6 GUI. Supports systemd and proot-Termux on Linux, plus Windows and macOS (amd64 and arm64). Includes Forge Drive, a Flask frontend proxying the Forgejo REST API with a dark UI.
 
-**Key Features:** Full lifecycle control (start/stop/logs) · Forgejo REST API proxy (Forge Drive) · proot + systemd dual-mode · Runtime-configurable settings · Package registry management · Windows support (Gitea fallback)
+**Key Features:** Full lifecycle control (start/stop/logs) · Forgejo REST API proxy (Forge Drive) · proot + systemd dual-mode · Runtime-configurable settings · Package registry management · Gitea fallback on Windows
 
 **Tech:** `Go` · `Python` · `PyQt6` · `Flask` · `Forgejo REST API`
 
-> 🪟 *Windows supported — routes to Gitea when Forgejo binary is unavailable*
+> 🪟 *Windows and 🍎 macOS supported — Gitea is used when the Forgejo binary is unavailable*
 
 ---
 
 ### ☁️ [cloud-forge](https://github.com/dev-boffin-io/cloud-forge)
 > *Mount any cloud storage as SFTP in one click.*
 
-Turn Google Drive, Dropbox, S3, Mega — any rclone remote — into a scriptable SFTP endpoint. Go CLI backend with PyQt5 GUI and system tray integration. Modular 8-file architecture with fixed OAuth flows.
+Turn Google Drive, Dropbox, S3, Mega — any rclone remote — into a scriptable SFTP endpoint. Go CLI backend with a PyQt5 GUI and system tray integration. Modular architecture with fixed OAuth flows.
 
-**Key Features:** OAuth2 flow · Remote creation wizard · System tray · 8-module GUI · ARM64/Termux support
+**Key Features:** OAuth2 flow · Remote creation wizard · System tray · Modular GUI · ARM64/Termux support
 
 **Tech:** `Go` · `Python` · `PyQt5` · `rclone` · `PyInstaller`
 
@@ -108,9 +113,9 @@ Turn Google Drive, Dropbox, S3, Mega — any rclone remote — into a scriptable
 ### 🚇 [tunnel-forge](https://github.com/dev-boffin-io/tunnel-forge)
 > *Cloudflared tunnel management — clean, modular, reliable.*
 
-Modular 13-file PyQt6 GUI manager for Cloudflared tunnels. QThread signal-based worker decoupling, retry-with-backoff, persistent config, and platform-safe process termination.
+Modular PyQt6 GUI manager for Cloudflared tunnels. QThread signal-based worker decoupling, retry-with-backoff, persistent config, and platform-safe process termination.
 
-**Key Features:** Modular 13-file architecture · QThread signal workers · Retry-with-backoff · One-click tunnel start/stop · Persistent config
+**Key Features:** Modular architecture · QThread signal workers · Retry-with-backoff · One-click tunnel start/stop · Persistent config
 
 **Tech:** `Python` · `PyQt6` · `cloudflared`
 
@@ -119,9 +124,9 @@ Modular 13-file PyQt6 GUI manager for Cloudflared tunnels. QThread signal-based 
 ### 🖥️ [virt-forge](https://github.com/dev-boffin-io/virt-forge)
 > *Modern QEMU VM manager for power users.*
 
-Full-featured VM manager on QEMU/KVM with PyQt6 GUI and Go CLI. No overhead of GNOME Boxes or Virt-Manager. Supports live migration, snapshots, and multi-arch targets.
+QEMU/KVM VM manager with a Go CLI toolset (`qemu-run`, `qemu-ctl`, `qemu-disk`) and a PyQt6 GUI. Snapshot management, live migration and a disk manager for QCOW2 images. Multi-arch targets (x86_64, ARM64, RISC-V).
 
-**Key Features:** Disk snapshots · Live migration · VNC/SPICE display · Multi-arch (x86_64, ARM64, RISC-V)
+**Key Features:** QCOW2 snapshots · Live migration · Disk manager (create, resize, convert) · Multi-arch
 
 **Tech:** `Go` · `Python` · `PyQt6` · `QEMU` · `Shell`
 
@@ -130,7 +135,7 @@ Full-featured VM manager on QEMU/KVM with PyQt6 GUI and Go CLI. No overhead of G
 ### 🔒 [sftp-forge](https://github.com/dev-boffin-io/sftp-forge)
 > *The SFTP client that gets out of your way — now in your pocket too.*
 
-Rewritten from the ground up in Flutter for secure file transfer, automation, and remote file management over SFTP. Same offline-first philosophy, now cross-platform on Linux **and Android**.
+Rewritten in Flutter for secure file transfer, automation, and remote file management over SFTP. Cross-platform on Linux **and Android**.
 
 **Key Features:** Cross-platform Flutter UI · Secure file transfer · Automation · Remote file management · Linux + Android builds
 
@@ -143,7 +148,7 @@ Rewritten from the ground up in Flutter for secure file transfer, automation, an
 ### ⚡ [qbit-forge](https://github.com/dev-boffin-io/qbit-forge)
 > *qbittorrent-nox — tray-managed, privacy-first.*
 
-Single-instance PyQt6 system-tray manager for qbittorrent-nox. PTY-based password capture, `fcntl` single-instance lock, and a separate GTK WebView launcher. Full ARM64 + proot-Termux support.
+Single-instance tray manager for qbittorrent-nox. PTY-based password capture, `fcntl` single-instance lock, and a separate GTK WebView launcher. Full ARM64 + proot-Termux support.
 
 **Key Features:** Single-instance lock (`fcntl`) · PTY password capture · System tray · `qb-webui` GTK WebView launcher · proot + ARM64 support
 
@@ -154,20 +159,20 @@ Single-instance PyQt6 system-tray manager for qbittorrent-nox. PTY-based passwor
 ### 🦙 [llama-forge](https://github.com/dev-boffin-io/llama-forge)
 > *llama.cpp on Linux — with a proper desktop GUI.*
 
-Local LLM desktop GUI for llama.cpp. Pure C/C++ engine. Refactored into a Python package with CMake-based PyInstaller build, deadlock-free subprocess streaming, and Linux mouse wheel fixes.
+Local LLM desktop GUI for llama.cpp, built on a pure C/C++ engine. Refactored into a Python package with a CMake-based PyInstaller build, deadlock-free subprocess streaming, and Linux mouse-wheel fixes.
 
 **Key Features:** Chat · Quantize · Convert · Inference · CMake PyInstaller build · Deadlock-free streaming
 
 **Tech:** `C++` · `Python` · `llama.cpp` · `CMake` · `PyInstaller`
 
-> ⚠️ *fork of [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) — custom GUI layer*
+> ⚠️ *Fork of [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) — custom GUI layer*
 
 ---
 
 ### 🔑 [ssh-forge](https://github.com/dev-boffin-io/ssh-forge)
 > *One command to rule all your SSH connections.*
 
-Passwordless SSH manager with GTK3 + VTE tabbed terminal GUI. Named profiles, automated key rotation, Catppuccin Mocha theme, Doctor dialog, and structured logging. Full ARM64 + proot-Termux support.
+Passwordless SSH manager with CLI and GUI. Named profiles, key setup, a Doctor dialog, and a GTK3 + VTE tabbed terminal. Full ARM64 + proot-Termux support.
 
 **Key Features:** Passwordless key setup · Named profiles · GTK3/VTE tabbed GUI · Doctor dialog · ARM64 + proot support
 
@@ -178,9 +183,9 @@ Passwordless SSH manager with GTK3 + VTE tabbed terminal GUI. Named profiles, au
 ### 📡 [share-forge](https://github.com/dev-boffin-io/share-forge)
 > *LAN file sharing — one click, any device.*
 
-PyQt6 desktop app with a Flask backend for zero-config LAN file sharing. Drag-and-drop upload, forced-download route, dark UI with font fallback, and breadcrumb navigation. Cross-platform: Linux and Windows builds via GitHub Actions.
+PyQt6 desktop app with a Flask backend for zero-config LAN file sharing. Drag-and-drop upload, forced-download route, dark UI, and breadcrumb navigation.
 
-**Key Features:** PyQt6 dark UI · Flask file server · Drag-and-drop · Forced-download route · Breadcrumb nav · `.gitignore` generation · Windows & Linux builds
+**Key Features:** Dark UI · Flask file server · Drag-and-drop · Forced-download route · Breadcrumb nav · Windows & Linux builds
 
 **Tech:** `Python` · `PyQt6` · `Flask` · `PyInstaller`
 
@@ -191,9 +196,9 @@ PyQt6 desktop app with a Flask backend for zero-config LAN file sharing. Drag-an
 ### 🐍 [py-forge](https://github.com/dev-boffin-io/py-forge)
 > *Python learning + dev environment — all in one GUI.*
 
-PyQt6 desktop app combining a Bengali-language Python typing trainer, a full code editor with syntax highlighting and `QProcess` run/stop, and a Python Manager tab for OS-aware version detection, PATH management, and installation. Cross-platform: Linux and Windows.
+PyQt6 desktop app combining a Bengali-language Python typing trainer, a code editor with syntax highlighting and run/stop, and a Python Manager for OS-aware version detection, PATH management, and installation.
 
-**Key Features:** 93 learning modes · Full code editor · Python Manager tab · OS-aware Python detection · PATH management · Auto pip install · Windows & Linux builds
+**Key Features:** 93 learning modes · Full code editor · Python Manager tab · OS-aware Python detection · PATH management · Windows & Linux builds
 
 **Tech:** `Python` · `PyQt6` · `PyInstaller`
 
@@ -204,7 +209,7 @@ PyQt6 desktop app combining a Bengali-language Python typing trainer, a full cod
 ### 🌐 [funnel-forge](https://github.com/dev-boffin-io/funnel-forge)
 > *Take a local server public — one click, one tunnel.*
 
-PyQt6 GUI for managing a Tailscale Funnel, exposing a local web server to the public internet without port-forwarding or a reverse proxy to babysit. This is what puts `git.bowfin-pleco.ts.net` (see [Self-Hosted Git](#-self-hosted-git) below) on the open internet.
+PyQt6 GUI for managing a Tailscale Funnel, exposing a local web server to the public internet without port-forwarding.
 
 **Key Features:** One-click Funnel start/stop · Status monitoring · No manual port-forwarding
 
@@ -215,9 +220,9 @@ PyQt6 GUI for managing a Tailscale Funnel, exposing a local web server to the pu
 ### 🔧 [gh-forge](https://github.com/dev-boffin-io/gh-forge)
 > *Git remotes and GitHub Actions, one GUI.*
 
-Bundled GUI pairing a local multi-remote Git Manager with a `gh` CLI-powered GitHub Actions Manager for workflow runs and storage cleanup.
+Bundled PyQt6 GUI with two tools: a local multi-remote Git Manager, and a `gh` CLI-powered GitHub Actions Manager for workflow runs, artifacts and cache cleanup.
 
-**Key Features:** Multi-remote Git management · GitHub Actions workflow manager · Storage/cache cleanup via `gh` CLI
+**Key Features:** Multi-remote Git management · Workflow runs and live logs · Artifacts and cache cleanup · Repo code browser · Built via GitHub Actions for Linux amd64, Linux arm64 and Windows
 
 **Tech:** `Python` · `PyQt6` · `gh CLI`
 
@@ -230,7 +235,7 @@ Bundled GUI pairing a local multi-remote Git Manager with a `gh` CLI-powered Git
 ### 🧠 [mind-forge-pro](https://github.com/dev-boffin-io/mind-forge-pro)
 > *An agentic AI assistant that never leaves your phone.*
 
-Offline, autonomous agentic AI personal assistant for Android, powered by native `llama.cpp`, Flutter, and a local RAG architecture — full assistant capability with absolute privacy, no cloud round-trip.
+Offline, autonomous agentic AI personal assistant for Android, powered by native `llama.cpp`, Flutter, and a local RAG architecture.
 
 **Tech:** `Flutter` · `Dart` · `llama.cpp` (native) · Local RAG
 
@@ -245,12 +250,14 @@ Native QEMU virtual machine launcher for Android, running ARM64 Linux VMs direct
 
 ---
 
-### 💻 [boffin_wayland](https://github.com/dev-boffin-io/boffin_wayland)
-> *A real terminal emulator for Android.*
+### 💻 [terminal-forge](https://github.com/dev-boffin-io/terminal-forge)
+> *A sleek, Material 3 terminal emulator for Android.*
 
-Standalone Android terminal emulator built on a C++ NDK pseudo-terminal with a Kivy frontend.
+Terminal emulator built on Termux's `TerminalView` — virtual keys, multiple sessions, and Debian, Alpine and Kali NetHunter rootfs sessions, with configurable keyboard shortcuts.
 
-**Tech:** `Python` (Kivy) · `C++` (NDK)
+**Tech:** `C` · `Android (Gradle)` · `Termux TerminalView`
+
+> 🍴 *Fork of [RohitKushvaha01/ReTerminal](https://github.com/RohitKushvaha01/ReTerminal)*
 
 ---
 
@@ -259,9 +266,27 @@ Standalone Android terminal emulator built on a C++ NDK pseudo-terminal with a K
 ### 🛡️ [Linux-core-identity-manager](https://github.com/dev-boffin-io/Linux-core-identity-manager)
 > *Linux user management — even inside Termux.*
 
-PyQt6 GUI for Linux user accounts. Works correctly in both standard desktop and proot/Termux environments. Protected primary user detection, lock/unlock accounts, sudo management.
+PyQt6 GUI for Linux user accounts. Works in standard desktop and proot/Termux environments. Protected primary user detection, lock/unlock accounts, sudo management.
 
 **Tech:** `Python` · `PyQt6`
+
+---
+
+### 🧭 [agent-forge-studio](https://github.com/dev-boffin-io/agent-forge-studio)
+> *An autonomous agent assistant for any Ollama or OpenAI-compatible endpoint.*
+
+Research, planning, content creation, scripts, edit decision lists, retention analysis and browser automation, with direct YouTube, Instagram, Facebook and Google operation. Playwright is the only dependency, loaded only when the browser tools are used.
+
+**Tech:** `JavaScript` · `Node.js` · `Playwright` · `Ollama` · `OpenAI-compatible APIs`
+
+---
+
+### 🎨 [ollama-forge-studio](https://github.com/dev-boffin-io/ollama-forge-studio)
+> *Vibe Coder — an agentic coding studio for any Ollama endpoint.*
+
+A local agentic coding studio with build, plan, general and explore agents, saved and resumable sessions, tools, MCP, LSP, skills, web tools and snapshots. Works in whatever directory you launch it, with zero runtime dependencies.
+
+**Tech:** `JavaScript` · `Node.js` (zero runtime deps) · `Ollama` · `MCP` · `LSP`
 
 ---
 
@@ -269,14 +294,14 @@ PyQt6 GUI for Linux user accounts. Works correctly in both standard desktop and 
 
 | Category | Technologies |
 |---|---|
-| **Languages** | Python · Go · C++ · Dart · Kotlin · Shell (POSIX/Bash) |
-| **GUI Frameworks** | PyQt5 · PyQt6 · GTK3 · VTE · Flutter · Kivy · Chainlit |
+| **Languages** | Python · Go · JavaScript · C · C++ · Dart · Kotlin · Shell (POSIX/Bash) |
+| **GUI Frameworks** | PyQt5 · PyQt6 · GTK3 · VTE · Flutter · Web (vanilla JS) |
 | **AI / ML** | Ollama · llama.cpp · RAG pipelines · multi-agent |
 | **Virtualization** | QEMU · KVM · libvirt |
 | **Cloud / Storage** | rclone · SFTP · Google Drive · S3 · Dropbox |
 | **Networking** | cloudflared · Tailscale Funnel · SSH · sshfs · Forgejo REST API |
 | **Packaging** | PyInstaller · AppImage · .deb · Go modules · Windows `.exe` · Android `.apk` |
-| **Platforms** | Linux (primary) · Windows · Android · ARM64 · proot-Termux |
+| **Platforms** | Linux (primary) · Windows · macOS · Android · ARM64 · proot-Termux |
 | **Dev Tools** | GitHub Actions · Git · gh CLI · flock · systemd |
 
 ---
@@ -339,15 +364,15 @@ All Forge projects welcome:
 
 ## 🙏 Acknowledgements
 
-[Ollama](https://ollama.com) · [rclone](https://rclone.org) · [QEMU](https://www.qemu.org) · [Qt / PyQt](https://riverbankcomputing.com) · [PyInstaller](https://pyinstaller.org) · [Forgejo](https://forgejo.org) · [cloudflared](https://github.com/cloudflare/cloudflared) · [Tailscale](https://tailscale.com) · [llama.cpp](https://github.com/ggerganov/llama.cpp) · [Flutter](https://flutter.dev) · [Kivy](https://kivy.org) · [GitHub CLI](https://cli.github.com) · [OpenSSH](https://www.openssh.com) · [Python](https://python.org) · [Go](https://go.dev) · [Kotlin](https://kotlinlang.org) · [GTK](https://gtk.org) · [VTE](https://wiki.gnome.org/Apps/Terminal/VTE)
+[Ollama](https://ollama.com) · [rclone](https://rclone.org) · [QEMU](https://www.qemu.org) · [Qt / PyQt](https://riverbankcomputing.com) · [PyInstaller](https://pyinstaller.org) · [Forgejo](https://forgejo.org) · [cloudflared](https://github.com/cloudflare/cloudflared) · [Tailscale](https://tailscale.com) · [llama.cpp](https://github.com/ggml-org/llama.cpp) · [Flutter](https://flutter.dev) · [GitHub CLI](https://cli.github.com) · [OpenSSH](https://www.openssh.com) · [Python](https://python.org) · [Go](https://go.dev) · [Kotlin](https://kotlinlang.org) · [GTK](https://gtk.org) · [VTE](https://wiki.gnome.org/Apps/Terminal/VTE)
 
 ---
 
 ## 📬 Get in Touch
 
 - **GitHub**: [@dev-boffin-io](https://github.com/dev-boffin-io)
-- **Email**: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ccaea3aaaaa5a28ca8a9bae1aea3aaaaa5a2e2a5a3">[email&#160;protected]</a>
-- **Website**: [dev-boffin-io.vercel.app](https://dev-boffin-io.vercel.app)
+- **Portfolio**: [dev-boffin-io.github.io](https://dev-boffin-io.github.io)
+- **Website (legacy)**: [dev-boffin-io.vercel.app](https://dev-boffin-io.vercel.app)
 - **Self-hosted Git**: [git.bowfin-pleco.ts.net](https://git.bowfin-pleco.ts.net/)
 
 ---
