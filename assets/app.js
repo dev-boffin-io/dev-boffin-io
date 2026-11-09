@@ -52,6 +52,8 @@
       desc: 'Autonomous agent assistant for any Ollama/OpenAI-compatible endpoint — research, planning, content creation, scripts, edit decision lists, retention analysis and browser automation, with direct YouTube, Instagram, Facebook and Google operation. Only dependency: Playwright, loaded on demand.' },
     'dev-boffin-io':  { group: 'other', icon: '🌐', lang: 'HTML', tags: ['portfolio', 'profile'],
       desc: 'Profile and portfolio hub — the home of the Forge Suite.' },
+    'proot-forge':    { group: 'other', icon: '📦', lang: 'C', local: true,
+      desc: 'Proot Forge Android APK' },
   };
 
   const LANG_COLORS = {
@@ -95,15 +97,18 @@
     return 'just now';
   }
 
-  const setText = (sel, value) => { $(sel).textContent = value; };
+  const setText = (sel, value) => { const el = $(sel); if (el) el.textContent = value; };
   const setStatus = (msg) => setText('#status', msg);
 
   /* ── Data ───────────────────────────────────────────────── */
   function normalize(r) {
     const meta = CURATED[r.name] || {};
+    const isLocal = meta.local === true;
     return {
       name: r.name,
-      url: r.html_url,
+      url: isLocal 
+        ? `https://git.bowfin-pleco.ts.net/dev-boffin-io/${r.name}`
+        : r.html_url,
       desc: meta.desc || r.description || 'No description yet.',
       icon: meta.icon || '📦',
       tags: meta.tags || (r.topics || []).slice(0, 4),
@@ -112,22 +117,29 @@
       stars: r.stargazers_count ?? null,
       updated: r.pushed_at || null,
       fork: Boolean(r.fork),
+      isLocal: isLocal
     };
   }
 
   // Static snapshot, used first and as a fallback if GitHub is unreachable.
   function fallbackRepos() {
-    return Object.entries(CURATED).map(([name, m]) => ({
-      name,
-      html_url: `https://github.com/${CONFIG.owner}/${name}`,
-      description: null,
-      language: m.lang,
-      stargazers_count: null,
-      pushed_at: null,
-      fork: ['llama-forge', 'terminal-forge'].includes(name),
-      archived: false,
-      topics: [],
-    }));
+    return Object.entries(CURATED).map(([name, m]) => {
+      const isLocal = m.local === true;
+      return {
+        name,
+        html_url: isLocal 
+          ? `https://git.bowfin-pleco.ts.net/dev-boffin-io/${name}`
+          : `https://github.com/${CONFIG.owner}/${name}`,
+        description: m.desc || null,
+        language: m.lang,
+        stargazers_count: null,
+        pushed_at: null,
+        fork: ['llama-forge', 'terminal-forge'].includes(name),
+        archived: false,
+        topics: m.tags || [],
+        isLocal: isLocal
+      };
+    });
   }
 
   function readCache() {
@@ -191,6 +203,7 @@
           r.group === 'forge' ? h('span', { class: 'pill', text: 'forge suite' }) : null,
           r.group === 'android' ? h('span', { class: 'pill pill-android', text: 'android' }) : null,
           r.fork ? h('span', { class: 'pill pill-warn', text: 'fork' }) : null,
+          r.isLocal ? h('span', { class: 'pill', style: 'border-color: var(--accent2); color: var(--accent2);', text: 'local' }) : null,
         ),
         h('span', { class: 'card-icon', 'aria-hidden': 'true', text: r.icon }),
       ),
@@ -204,12 +217,15 @@
           r.updated ? h('span', { text: `updated ${timeAgo(r.updated)}` }) : null,
         ),
         h('a', { class: 'card-link', href: r.url, target: '_blank', rel: 'noopener', text: 'View repo →',
-          'aria-label': `View ${r.name} on GitHub` }),
+          'aria-label': `View ${r.name} on ${r.isLocal ? 'local git' : 'GitHub'}` }),
       ),
     );
   }
 
   function renderChips() {
+    const host = $('#lang-chips');
+    if (!host) return;
+
     const counts = new Map();
     state.repos.forEach((r) => { if (r.lang) counts.set(r.lang, (counts.get(r.lang) || 0) + 1); });
     const langs = [...counts.entries()].sort((a, b) => b[1] - a[1]);
@@ -220,7 +236,7 @@
       return btn;
     };
 
-    $('#lang-chips').replaceChildren(
+    host.replaceChildren(
       chip('all', 'all', state.repos.length),
       ...langs.map(([lang, n]) => chip(lang, lang, n)),
     );
@@ -230,21 +246,27 @@
     const list = visibleRepos();
 
     for (const [group, ids] of Object.entries(GROUPS)) {
+      const grid = $(`#${ids.grid}`);
+      if (!grid) continue;
       const items = list.filter((r) => r.group === group);
-      $(`#${ids.grid}`).replaceChildren(...items.map(card));
+      grid.replaceChildren(...items.map(card));
       setText(`#${ids.count}`, items.length);
-      $(`#${ids.section}`).closest('section').hidden = items.length === 0;
+      const section = $(`#${ids.section}`);
+      if (section) section.closest('section').hidden = items.length === 0;
     }
 
-    $('#empty').hidden = list.length !== 0;
+    const empty = $('#empty');
+    if (empty) empty.hidden = list.length !== 0;
     renderChips();
     setText('#stat-forge', state.repos.filter((r) => r.group === 'forge').length);
   }
 
   /* ── Init ───────────────────────────────────────────────── */
   function bindControls() {
-    $('#search').addEventListener('input', (e) => { state.query = e.target.value; render(); });
-    $('#sort').addEventListener('change', (e) => { state.sort = e.target.value; render(); });
+    const search = $('#search');
+    const sort = $('#sort');
+    if (search) search.addEventListener('input', (e) => { state.query = e.target.value; render(); });
+    if (sort) sort.addEventListener('change', (e) => { state.sort = e.target.value; render(); });
   }
 
   async function init() {
@@ -252,9 +274,11 @@
 
     if (CONFIG.email) {
       const mail = $('#mail');
-      mail.href = `mailto:${CONFIG.email}`;
-      mail.textContent = 'Email';
-      mail.hidden = false;
+      if (mail) {
+        mail.href = `mailto:${CONFIG.email}`;
+        mail.textContent = 'Email';
+        mail.hidden = false;
+      }
     }
 
     bindControls();
@@ -266,23 +290,30 @@
     try {
       const { user, repos, at } = await fetchLive();
 
-      state.repos = repos
+      const live = repos
         .filter((r) => !CONFIG.exclude.includes(r.name))
         .filter((r) => CURATED[r.name] || (!r.fork && !r.archived))
         .map(normalize);
+
+      const localOnly = fallbackRepos()
+        .filter((r) => CURATED[r.name]?.local)
+        .map(normalize)
+        .filter((r) => !live.some((x) => x.name === r.name));
+
+      state.repos = [...live, ...localOnly];
 
       const ownStars = repos
         .filter((r) => !r.fork)
         .reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
 
-      setText('#stat-repos', user.public_repos);
-      setText('#stat-stars', ownStars);
-      setText('#stat-followers', user.followers);
+      if ($('#stat-repos')) setText('#stat-repos', user.public_repos);
+      if ($('#stat-stars')) setText('#stat-stars', ownStars);
+      if ($('#stat-followers')) setText('#stat-followers', user.followers);
 
       const time = new Date(at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       setStatus(`Live from GitHub · synced ${time}`);
     } catch (err) {
-      setText('#stat-repos', state.repos.length);
+      if ($('#stat-repos')) setText('#stat-repos', state.repos.length);
       setStatus(`Offline snapshot — couldn't reach GitHub (${err.message}).`);
     }
 

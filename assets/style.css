@@ -164,6 +164,10 @@ h1 {
 .card-link { color: var(--accent); text-decoration: none; }
 .card-link:hover { text-decoration: underline; }
 
+.documentation { padding-top: 40px; }
+.documentation h2 { margin-bottom: 16px; }
+.documentation p { margin-bottom: 24px; }
+
 .empty { padding: 40px 0; text-align: center; color: var(--muted); }
 
 footer {

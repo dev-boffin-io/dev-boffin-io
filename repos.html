@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repositories — dev-boffin-io</title>
+  <meta name="description" content="Browse all repositories by dev-boffin-io" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%92%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <main id="main" class="wrap">
+    <header class="hero" style="padding-bottom: 24px;">
+      <p class="eyebrow">forge suite / repositories</p>
+      <h1>All <span class="hl">Projects</span></h1>
+      <div class="actions">
+        <a class="btn" href="index.html">← Back to Profile</a>
+      </div>
+    </header>
+
+    <section class="controls" aria-label="Filter repositories">
+      <label class="search">
+        <span class="sr-only">Search repositories</span>
+        <input id="search" type="search" placeholder="search name, tag, language…" autocomplete="off" />
+      </label>
+      <div class="row">
+        <div id="lang-chips" class="chips" role="group" aria-label="Filter by language"></div>
+        <label class="sort">sort
+          <select id="sort">
+            <option value="updated">recently updated</option>
+            <option value="stars">most stars</option>
+            <option value="name">name</option>
+          </select>
+        </label>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite">Loading…</p>
+    </section>
+
+    <section class="group" aria-labelledby="h-forge" hidden>
+      <h2 id="h-forge" class="group-title">⚒ Forge Suite <span class="count" id="c-forge"></span></h2>
+      <div class="grid" id="grid-forge"></div>
+    </section>
+
+    <section class="group" aria-labelledby="h-android" hidden>
+      <h2 id="h-android" class="group-title">📱 Android Lab <span class="count" id="c-android"></span></h2>
+      <div class="grid" id="grid-android"></div>
+    </section>
+
+    <section class="group" aria-labelledby="h-other" hidden>
+      <h2 id="h-other" class="group-title">◈ Other projects <span class="count" id="c-other"></span></h2>
+      <div class="grid" id="grid-other"></div>
+    </section>
+
+    <p id="empty" class="empty" hidden>No repositories match your filters.</p>
+
+    <footer>
+      <div>© <span id="year"></span> <span class="g">dev-boffin-io</span> — privacy-first · offline-first · open source</div>
+      <div>MIT License · Linux · Windows · Android · ARM64</div>
+    </footer>
+  </main>
+
+  <noscript><p class="wrap">JavaScript is off. Browse all projects on <a href="https://github.com/dev-boffin-io">GitHub</a>.</p></noscript>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>

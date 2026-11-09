@@ -31,16 +31,16 @@
   <a class="skip" href="#main">Skip to content</a>
 
   <main id="main" class="wrap">
-
     <header class="hero">
-      <p class="eyebrow">forge suite / open source</p>
-      <h1>Hi, I'm <span class="hl">Boffin</span> 👋</h1>
+      <p class="eyebrow">forge suite / profile</p>
+      <h1 class="hl">Hi, I'm Boffin 👋</h1>
       <p class="lead">Independent open source developer. I build clean, fast, offline-first tools for Linux, Windows and Android — no telemetry, no cloud lock-in.</p>
 
       <div class="actions">
         <a class="btn btn-primary" href="https://github.com/dev-boffin-io" target="_blank" rel="noopener">GitHub ↗</a>
         <a class="btn" href="https://git.bowfin-pleco.ts.net/" target="_blank" rel="noopener">Self-hosted Git ↗</a>
         <a id="mail" class="btn" hidden>Email</a>
+        <a class="btn" href="repos.html">View All Repositories ↗</a>
       </div>
 
       <dl class="stats">
@@ -51,42 +51,20 @@
       </dl>
     </header>
 
-    <section class="controls" aria-label="Filter repositories">
-      <label class="search">
-        <span class="sr-only">Search repositories</span>
-        <input id="search" type="search" placeholder="search name, tag, language…" autocomplete="off" />
-      </label>
-      <div class="row">
-        <div id="lang-chips" class="chips" role="group" aria-label="Filter by language"></div>
-        <label class="sort">sort
-          <select id="sort">
-            <option value="updated">recently updated</option>
-            <option value="stars">most stars</option>
-            <option value="name">name</option>
-          </select>
-        </label>
-      </div>
-      <p id="status" class="status" role="status" aria-live="polite">Loading…</p>
+    <section class="documentation">
+      <h2 class="group-title">About Me</h2>
+      <p class="lead">I am passionate about privacy, performance, and simplicity. My work focuses on creating tools that empower users to maintain control over their digital lives, even in offline or restricted environments.</p>
+      
+      <h2 class="group-title">Core Philosophy</h2>
+      <ul class="tags" style="list-style: none; padding: 0;">
+        <li class="pill" style="margin-bottom: 8px;">🛡️ Privacy-First</li>
+        <li class="pill" style="margin-bottom: 8px;">🔌 Offline-First</li>
+        <li class="pill" style="margin-bottom: 8px;">🔓 Open Source</li>
+        <li class="pill" style="margin-bottom: 8px;">🚀 High Performance</li>
+      </ul>
     </section>
 
-    <section class="group" aria-labelledby="h-forge" hidden>
-      <h2 id="h-forge" class="group-title">⚒ Forge Suite <span class="count" id="c-forge"></span></h2>
-      <div class="grid" id="grid-forge"></div>
-    </section>
-
-    <section class="group" aria-labelledby="h-android" hidden>
-      <h2 id="h-android" class="group-title">📱 Android Lab <span class="count" id="c-android"></span></h2>
-      <div class="grid" id="grid-android"></div>
-    </section>
-
-    <section class="group" aria-labelledby="h-other" hidden>
-      <h2 id="h-other" class="group-title">◈ Other projects <span class="count" id="c-other"></span></h2>
-      <div class="grid" id="grid-other"></div>
-    </section>
-
-    <p id="empty" class="empty" hidden>No repositories match your filters.</p>
-
-    <footer>
+    <footer style="margin-top: 80px;">
       <div>© <span id="year"></span> <span class="g">dev-boffin-io</span> — privacy-first · offline-first · open source</div>
       <div>MIT License · Linux · Windows · Android · ARM64</div>
     </footer>
